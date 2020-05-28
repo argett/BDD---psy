@@ -7,25 +7,31 @@ package Pack_psy;
 
 import java.util.Calendar;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author lilian
  */
 public class Psy_home extends javax.swing.JFrame {
-    private static Psychologue psycho;
+    private static Session psycho;
+    DefaultTableModel model;
 
-    public Psy_home(Psychologue psy) {
+    public Psy_home(Session psy) {
         initComponents();
         psycho = psy;
         this.lbl_psyCo.setText("conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         this.lbl_date.setText(date.format(calendar.getTime()));
+        fillComponents();
 
     }
 
@@ -65,17 +71,14 @@ public class Psy_home extends javax.swing.JFrame {
 
         table_calendrier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Horaire", "Nom", "Prénom", "Dernière séance", "Fiche complète"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -199,7 +202,32 @@ public class Psy_home extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-     private void btn_dateSuppMouseClicked(MouseEvent evt) {
+    
+    private void fillComponents(){
+        model = (DefaultTableModel)table_calendrier.getModel();
+        try {
+            Statement stmt = psycho.getConn().createStatement();
+            String getHoraire = "SELECT horaire FROM Consultations";
+            String getNoms = "SELECT nom FROM Patients";
+            String getPrenoms = "SELECT prenom FROM Patients";
+            String getSeance = "SELECT proffesion FROM Proffessions";
+            ResultSet rsH = stmt.executeQuery(getHoraire);
+            ResultSet rsN = stmt.executeQuery(getNoms);
+            //ResultSet rsP = stmt.executeQuery(getPrenoms);
+            //ResultSet rsS = stmt.executeQuery(getSeance);
+
+            while(rsH != null) {
+               //model.insertRow(rsH.getString("horaire"),rsN.getString("nom"),rsP.getString("prenom"),rsS.getString("profession"),"click");
+               model.insertRow(model.getRowCount(), new Object[]{"1","2","3","4","click"});
+               rsH.next();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void btn_dateSuppMouseClicked(MouseEvent evt) {
        Calendar calendar = Calendar.getInstance();
        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
 

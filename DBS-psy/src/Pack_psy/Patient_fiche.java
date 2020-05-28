@@ -15,12 +15,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  * @author lilian
  */
 public class Patient_fiche extends javax.swing.JFrame {
-    Psychologue psycho;
+    Session psycho;
 
-    public Patient_fiche(Psychologue psy) {
+    public Patient_fiche(Session psy) {
         this.psycho = psy;
         this.initComponents();
-        this.lbl_psyCo.setText(this.psycho.getName());
+        this.lbl_psyCo.setText(this.psycho.getPsychologue());
     }
 
 

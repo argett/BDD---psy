@@ -5,7 +5,6 @@
  */
 package Pack_psy;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 import javax.swing.*;
@@ -16,7 +15,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
  * @author lilian
  */
 public class Connexion extends javax.swing.JFrame {
-     private static Psychologue psy;
+     private static Session session;
+     private static Connection conn;
 
     /**
      * Creates new form Connexion
@@ -41,6 +41,7 @@ public class Connexion extends javax.swing.JFrame {
         btn_connecter = new javax.swing.JButton();
         insert_pseudo = new javax.swing.JTextField();
         insert_mdp = new javax.swing.JTextField();
+        btn_exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +65,13 @@ public class Connexion extends javax.swing.JFrame {
             }
         });
 
+        btn_exit.setText(" X ");
+        btn_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_exitMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,7 +79,9 @@ public class Connexion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_connexion)
-                .addGap(273, 273, 273))
+                .addGap(190, 190, 190)
+                .addComponent(btn_exit)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -93,8 +103,10 @@ public class Connexion extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(lbl_connexion)
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_connexion)
+                    .addComponent(btn_exit))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_pseudo)
@@ -113,11 +125,15 @@ public class Connexion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_btn_exitMouseClicked
+
     private void btn_connecterMouseClicked(MouseEvent evt) {
       boolean connected = true;
       if (connected) {
-         psy = new Psychologue(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
-         Psy_home home = new Psy_home(psy);
+         session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©", conn);
+         Psy_home home = new Psy_home(session);
          home.setVisible(true);
          this.dispose();
       }
@@ -132,47 +148,44 @@ public class Connexion extends javax.swing.JFrame {
    }
 
    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-      /*
-       Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-      Connection conn = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=project-malaisie;integratedSecurity=true");
-      Statement stmt = conn.createStatement();
-      String myQuery = "SELECT * FROM Analyst";
-      ResultSet rs = stmt.executeQuery(myQuery);
+        
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        conn = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
+        Statement stmt = conn.createStatement();
+        String myQuery = "SELECT * FROM Anterieure";
+        ResultSet rs = stmt.executeQuery(myQuery);
 
-      while(rs.next()) {
-         String s = rs.getString("id_computer");
-         System.out.println(s);
-      }
+        while(rs.next()) {
+           String s = rs.getString("patientid");
+           System.out.println(s);
+        }
 
-      if (conn != null) {
-         System.out.println("Connected");
-      }
-*/
-      try {
-         LookAndFeelInfo[] var10 = UIManager.getInstalledLookAndFeels();
-         int var6 = var10.length;
+        if (conn != null) {
+           System.out.println("Connected");
+        }
 
-         for(int var7 = 0; var7 < var6; ++var7) {
-            LookAndFeelInfo info = var10[var7];
-            if ("Nimbus".equals(info.getName())) {
-               UIManager.setLookAndFeel(info.getClassName());
-               break;
-            }
-         }
-      } catch (InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | ClassNotFoundException var9) {
-         System.out.println("Problem :" + var9.getMessage());
-      }
+        try {
+           LookAndFeelInfo[] var10 = UIManager.getInstalledLookAndFeels();
+           int var6 = var10.length;
+
+           for(int var7 = 0; var7 < var6; ++var7) {
+              LookAndFeelInfo info = var10[var7];
+              if ("Nimbus".equals(info.getName())) {
+                 UIManager.setLookAndFeel(info.getClassName());
+                 break;
+              }
+           }
+        } catch (InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | ClassNotFoundException var9) {
+           System.out.println("Problem :" + var9.getMessage());
+        }
 
       (new Connexion()).setVisible(true);
-   }
-
-   private void btn_quitActionPerformed(ActionEvent evt) {
-      System.exit(0);
    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_connecter;
+    private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_inscrire;
     private javax.swing.JTextField insert_mdp;
     private javax.swing.JTextField insert_pseudo;

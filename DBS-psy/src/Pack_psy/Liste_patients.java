@@ -10,12 +10,12 @@ package Pack_psy;
  * @author lilian
  */
 public class Liste_patients extends javax.swing.JFrame {
-    Psychologue psycho;
+    Session psycho;
 
-    public Liste_patients(Psychologue psy) {
+    public Liste_patients(Session psy) {
        this.psycho = psy;
        this.initComponents();
-       this.lbl_psyCo.setText(this.psycho.getName());
+       this.lbl_psyCo.setText(this.psycho.getPsychologue());
     }
 
 
