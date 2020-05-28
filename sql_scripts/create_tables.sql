@@ -1,3 +1,39 @@
+ALTER TABLE Patients
+    DROP CONSTRAINT IF EXISTS "Patients_Proffessions_FK";
+ALTER TABLE Rendez_Vous
+    DROP CONSTRAINT IF EXISTS "Rendez_Vous_Consultations_FK";
+ALTER TABLE Rendez_Vous
+    DROP CONSTRAINT IF EXISTS "Rendez_Vous_Patients0_FK";
+ALTER TABLE Anterieure
+    DROP CONSTRAINT IF EXISTS "Anterieure_Patients_FK";
+ALTER TABLE Anterieure
+    DROP CONSTRAINT IF EXISTS "Anterieure_Proffessions0_FK";
+ALTER TABLE Notes_Postures
+    DROP CONSTRAINT IF EXISTS "Notes_Postures_Consultations0_FK";
+ALTER TABLE Notes_Postures
+    DROP CONSTRAINT IF EXISTS "Notes_Postures_Postures_FK";
+ALTER TABLE Notes_Comportements
+    DROP CONSTRAINT IF EXISTS "Notes_Comportements_Comportements_FK";
+ALTER TABLE Notes_Comportements
+    DROP CONSTRAINT IF EXISTS "Notes_Comportements_Consultations0_FK";
+ALTER TABLE Notes_Mots
+    DROP CONSTRAINT IF EXISTS "Notes_Mots_MotCles_FK";
+ALTER TABLE Notes_Mots
+    DROP CONSTRAINT IF EXISTS "Notes_Mots_Consultations0_FK";
+
+DROP TABLE  IF EXISTS Consultations;
+DROP TABLE  IF EXISTS Proffessions;
+DROP TABLE  IF EXISTS Patients;
+DROP TABLE  IF EXISTS MotCles;
+DROP TABLE  IF EXISTS Postures;
+DROP TABLE  IF EXISTS Comportements;
+DROP TABLE  IF EXISTS Rendez_Vous;
+DROP TABLE  IF EXISTS Anterieure;
+DROP TABLE  IF EXISTS Notes_Comportements;
+DROP TABLE  IF EXISTS Notes_Mots;
+DROP TABLE  IF EXISTS Notes_Postures;
+DROP TABLE  IF EXISTS Compte_Psy;
+
 /*------------------------------------------------------------
 # Table: Consultations
 ------------------------------------------------------------*/
@@ -33,6 +69,7 @@ CREATE TABLE Patients(
         prenom        Varchar (20) NOT NULL ,
         datenaissance Date NOT NULL ,
         sexe          Char (1) NOT NULL ,
+        mdp           Varchar (30) NOT NULL,
         connupar      Varchar (50) NOT NULL ,
         profession    Varchar (30)
 	,CONSTRAINT Patients_PK PRIMARY KEY (patientid)
@@ -80,7 +117,7 @@ CREATE TABLE Rendez_Vous(
         patientid      Int NOT NULL
 	,CONSTRAINT Rendez_Vous_PK PRIMARY KEY (consultationid,patientid)
 
-	,CONSTRAINT Rendez_Vous_Consultations_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid)
+	,CONSTRAINT Rendez_Vous_Consultations_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
 	,CONSTRAINT Rendez_Vous_Patients0_FK FOREIGN KEY (patientid) REFERENCES Patients(patientid)
 );
 
@@ -109,7 +146,7 @@ CREATE TABLE Notes_Comportements(
 	,CONSTRAINT Notes_Comportements_PK PRIMARY KEY (comportement,consultationid)
 
 	,CONSTRAINT Notes_Comportements_Comportements_FK FOREIGN KEY (comportement) REFERENCES Comportements(comportement)
-	,CONSTRAINT Notes_Comportements_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid)
+	,CONSTRAINT Notes_Comportements_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
 );
 
 
@@ -123,7 +160,7 @@ CREATE TABLE Notes_Mots(
 	,CONSTRAINT Notes_Mots_PK PRIMARY KEY (mot,consultationid)
 
 	,CONSTRAINT Notes_Mots_MotCles_FK FOREIGN KEY (mot) REFERENCES MotCles(mot)
-	,CONSTRAINT Notes_Mots_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid)
+	,CONSTRAINT Notes_Mots_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
 );
 
 
@@ -137,5 +174,15 @@ CREATE TABLE Notes_Postures(
 	,CONSTRAINT Notes_Postures_PK PRIMARY KEY (posture,consultationid)
 
 	,CONSTRAINT Notes_Postures_Postures_FK FOREIGN KEY (posture) REFERENCES Postures(posture)
-	,CONSTRAINT Notes_Postures_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid)
+	,CONSTRAINT Notes_Postures_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
+);
+
+/*------------------------------------------------------------
+# Table: Compte Psy
+------------------------------------------------------------*/
+
+CREATE TABLE Compte_Psy(
+        psyid        Varchar (15) NOT NULL ,
+        mdp          Varchar (30) NOT NULL
+	,CONSTRAINT Compte_Psy_PK PRIMARY KEY (psyid)
 );
