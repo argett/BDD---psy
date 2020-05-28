@@ -7,11 +7,14 @@ package Pack_psy;
 
 import java.util.Calendar;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +27,7 @@ public class Psy_home extends javax.swing.JFrame {
     private static Session psycho;
     DefaultTableModel model;
 
-    public Psy_home(Session psy) {
+    public Psy_home(Session psy) throws ClassNotFoundException, SQLException {
         initComponents();
         psycho = psy;
         this.lbl_psyCo.setText("conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
@@ -203,24 +206,49 @@ public class Psy_home extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     
-    private void fillComponents(){
+    private void fillComponents() throws ClassNotFoundException, SQLException{
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
+        Statement stmt = con.createStatement();
+        
+        ArrayList<String> horaires = new ArrayList<>();
+        ArrayList<String> noms = new ArrayList<>();
+        ArrayList<String> prenoms = new ArrayList<>();
+        ArrayList<String> professions = new ArrayList<>();
+        
+        
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            Statement stmt = psycho.getConn().createStatement();
+            stmt = con.createStatement();
             String getHoraire = "SELECT horaire FROM Consultations";
             String getNoms = "SELECT nom FROM Patients";
             String getPrenoms = "SELECT prenom FROM Patients";
-            String getSeance = "SELECT proffesion FROM Proffessions";
+            String getSeance = "SELECT profession FROM Proffessions";
+            
             ResultSet rsH = stmt.executeQuery(getHoraire);
-            ResultSet rsN = stmt.executeQuery(getNoms);
-            //ResultSet rsP = stmt.executeQuery(getPrenoms);
-            //ResultSet rsS = stmt.executeQuery(getSeance);
-
-            while(rsH != null) {
-               //model.insertRow(rsH.getString("horaire"),rsN.getString("nom"),rsP.getString("prenom"),rsS.getString("profession"),"click");
-               model.insertRow(model.getRowCount(), new Object[]{"1","2","3","4","click"});
-               rsH.next();
+            while(rsH.next()){
+               horaires.add(rsH.getString("horaire"));
             }
+            
+            ResultSet rsN = stmt.executeQuery(getNoms);            
+            while(rsN.next()){
+               noms.add(rsN.getString("nom"));
+            }
+            
+            ResultSet rsP = stmt.executeQuery(getPrenoms);           
+            while(rsP.next()){
+               prenoms.add(rsP.getString("prenom"));
+            }
+            
+            ResultSet rsS = stmt.executeQuery(getSeance);            
+            while(rsS.next()){
+               professions.add(rsS.getString("profession"));
+            }
+            
+            for(int i=0; i<horaires.size(); i++){
+                model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});                
+            }
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);

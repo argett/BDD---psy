@@ -7,6 +7,8 @@ package Pack_psy;
 
 import java.awt.event.MouseEvent;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -132,10 +134,17 @@ public class Connexion extends javax.swing.JFrame {
     private void btn_connecterMouseClicked(MouseEvent evt) {
       boolean connected = true;
       if (connected) {
-         session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©", conn);
-         Psy_home home = new Psy_home(session);
-         home.setVisible(true);
-         this.dispose();
+        session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©", conn);
+        Psy_home home;
+        try {
+            home = new Psy_home(session);
+            home.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
       }
 
       this.insert_pseudo.setText("test1");
