@@ -5,17 +5,30 @@
  */
 package Pack_psy;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author lilian
  */
 public class Liste_patients extends javax.swing.JFrame {
     Session psycho;
-
-    public Liste_patients(Session psy) {
+    DefaultTableModel model;
+    
+    public Liste_patients(Session psy) throws ClassNotFoundException, SQLException{
        this.psycho = psy;
        this.initComponents();
        this.lbl_psyCo.setText(this.psycho.getPsychologue());
+       
+       fillComponents();
     }
 
 
@@ -37,20 +50,17 @@ public class Liste_patients extends javax.swing.JFrame {
 
         table_calendrier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nom", "Prénom", "Dernière séance", "Fiche complète"
+                "ID", "Nom", "Prénom"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -61,12 +71,16 @@ public class Liste_patients extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table_calendrier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_calendrierMouseClicked(evt);
+            }
+        });
         tab_rdvDuJour.setViewportView(table_calendrier);
         if (table_calendrier.getColumnModel().getColumnCount() > 0) {
             table_calendrier.getColumnModel().getColumn(0).setResizable(false);
             table_calendrier.getColumnModel().getColumn(1).setResizable(false);
             table_calendrier.getColumnModel().getColumn(2).setResizable(false);
-            table_calendrier.getColumnModel().getColumn(3).setResizable(false);
         }
 
         lbl_psyCo.setText("Psy connecté");
@@ -111,10 +125,47 @@ public class Liste_patients extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void fillComponents() throws ClassNotFoundException, SQLException{
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:54055;databaseName=dbs-psy;integratedSecurity=true");
+        Statement stmt = con.createStatement();
+        
+        
+        
+        model = (DefaultTableModel)table_calendrier.getModel();
+        try {
+            stmt = con.createStatement();
+            String getPatients = "SELECT patientid,nom,prenom FROM Patients";
+            
+            int patientid;
+            String nom,prenom;
+            
+            ResultSet rs = stmt.executeQuery(getPatients);
+            while(rs.next()){
+                patientid= rs.getInt("patientid");
+                nom= rs.getString("nom");
+                prenom= rs.getString("prenom");
+                model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
         this.dispose();
     }//GEN-LAST:event_btn_exitMouseClicked
+
+    private void table_calendrierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_calendrierMouseClicked
+        int row, id;
+        row=table_calendrier.rowAtPoint(evt.getPoint());
+        model = (DefaultTableModel)table_calendrier.getModel();
+        id = (int) model.getValueAt(row, model.findColumn("ID"));
+        
+        Info_patients pf = new Info_patients(psycho, id);
+        pf.setVisible(true);
+    }//GEN-LAST:event_table_calendrierMouseClicked
 
     /**
      * @param args the command line arguments
