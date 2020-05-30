@@ -308,15 +308,13 @@ public class Info_patients extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void fillComponents(int pid) throws ClassNotFoundException, SQLException{
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:54055;databaseName=dbs-psy;integratedSecurity=true");
-        Statement stmt = con.createStatement();
+        // establish the connection
+        Conn_dbs connex = new Conn_dbs(); 
         
         try {
-            stmt = con.createStatement();
             String getPatients = "SELECT * FROM Patients WHERE patientid = " + Integer.toString(pid) + ";";
             
-            ResultSet rs = stmt.executeQuery(getPatients);
+            ResultSet rs = connex.getStatement().executeQuery(getPatients);
             rs.next();
             lbl_inNom.setText(rs.getString("nom"));
             lbl_inPrenom.setText(rs.getString("prenom"));
@@ -328,7 +326,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             
             String getAnterieures = "SELECT profession FROM Anterieure WHERE patientid = " + Integer.toString(pid) + ";";
             
-            rs = stmt.executeQuery(getAnterieures);
+            rs = connex.getStatement().executeQuery(getAnterieures);
             
             model = (DefaultTableModel)table_anterieure.getModel();
             while(rs.next()){
@@ -344,7 +342,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
                     + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire< '" + date
                     + "' ORDER BY c.horaire;";
             
-            rs = stmt.executeQuery(getRDVPasse);
+            rs = connex.getStatement().executeQuery(getRDVPasse);
             model = (DefaultTableModel)table_rdvPasse.getModel();
             while(rs.next()){
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
@@ -355,7 +353,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
                     + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire> '" + date
                     + "' ORDER BY c.horaire;";
             
-            rs = stmt.executeQuery(getRDVFutur);
+            rs = connex.getStatement().executeQuery(getRDVFutur);
             model = (DefaultTableModel)table_rdvFutur.getModel();
             while(rs.next()){
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});

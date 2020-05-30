@@ -7,11 +7,8 @@ package Pack_psy;
 
 import java.util.Calendar;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -209,75 +206,65 @@ public class Psy_home extends javax.swing.JFrame {
      */
     
     private void fillCalendar() {
+        // establish the connection
+        Conn_dbs connex = new Conn_dbs(); 
+        
         // dont forget to erase the table before make the update
         DefaultTableModel dtm = (DefaultTableModel) table_calendrier.getModel();
         dtm.setRowCount(0);
         
+        //Save the dbs content into lists before to fill the table, otherwise the conn will be closed after 1 update
+        ArrayList<String> horaires = new ArrayList<>();
+        ArrayList<String> noms = new ArrayList<>();
+        ArrayList<String> prenoms = new ArrayList<>();
+        ArrayList<String> professions = new ArrayList<>();
+        // to make the update
+        model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            //Connect to the DBS
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
-            Statement stmt = con.createStatement();
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
             
-            //Save the dbs content into lists before to fill the table, otherwise the conn will be closed after 1 update
-            ArrayList<String> horaires = new ArrayList<>();
-            ArrayList<String> noms = new ArrayList<>();
-            ArrayList<String> prenoms = new ArrayList<>();
-            ArrayList<String> professions = new ArrayList<>();
+            // set the bounds of the calendar (select all rendez-vous between today and tomorrow)
+            Calendar tomorrow = Calendar.getInstance();
+            Date day = new SimpleDateFormat("yyyy-dd-MM").parse(lbl_date.getText()); // we take the day the psy is checking
+            tomorrow.setTime(day);      // we transform the date into a calendar
+            tomorrow.add(6, 1);         // we add 1 day into the calendar
             
-            // to make the update
-            model = (DefaultTableModel)table_calendrier.getModel();
-            try {
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
-                
-                // set the bounds of the calendar (select all rendez-vous between today and tomorrow)
-                Calendar tomorrow = Calendar.getInstance();
-                Date day = new SimpleDateFormat("yyyy-dd-MM").parse(lbl_date.getText()); // we take the day the psy is checking
-                tomorrow.setTime(day);      // we transform the date into a calendar
-                tomorrow.add(6, 1);         // we add 1 day into the calendar
-                
-                // make the queries
-                stmt = con.createStatement();
-                String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire";
-                String getNoms = "SELECT nom FROM Patients";
-                String getPrenoms = "SELECT prenom FROM Patients";
-                String getSeance = "SELECT profession FROM Proffessions";
-                
-                // save the content into lists
-                ResultSet rsH = stmt.executeQuery(getHoraire);
-                while(rsH.next()){
-                    horaires.add(rsH.getString("horaire"));
-                }
-                
-                ResultSet rsN = stmt.executeQuery(getNoms);
-                while(rsN.next()){
-                    noms.add(rsN.getString("nom"));
-                }
-                
-                ResultSet rsP = stmt.executeQuery(getPrenoms);
-                while(rsP.next()){
-                    prenoms.add(rsP.getString("prenom"));
-                }
-                
-                ResultSet rsS = stmt.executeQuery(getSeance);
-                while(rsS.next()){
-                    professions.add(rsS.getString("profession"));
-                }
-                
-                // now the querries are finished, we can update the table (and make the conn closed)
-                for(int i=0; i<horaires.size(); i++){
-                    model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});
-                }
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+            // make the queries
+            String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire";
+            String getNoms = "SELECT nom FROM Patients";
+            String getPrenoms = "SELECT prenom FROM Patients";
+            String getSeance = "SELECT profession FROM Proffessions";
+            
+            // save the content into lists
+            ResultSet rsH = connex.getStatement().executeQuery(getHoraire);
+            while(rsH.next()){
+                horaires.add(rsH.getString("horaire"));
             }
+
+            ResultSet rsN = connex.getStatement().executeQuery(getNoms);
+            while(rsN.next()){
+                noms.add(rsN.getString("nom"));
+            }
+            
+            ResultSet rsP = connex.getStatement().executeQuery(getPrenoms);
+            while(rsP.next()){
+                prenoms.add(rsP.getString("prenom"));
+            }
+            
+            ResultSet rsS = connex.getStatement().executeQuery(getSeance);
+            while(rsS.next()){
+                professions.add(rsS.getString("profession"));
+            }
+            
+            // now the querries are finished, we can update the table (and make the conn closed)
+            for(int i=0; i<horaires.size(); i++){
+                model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});
+            }
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (ParseException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

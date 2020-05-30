@@ -6,9 +6,6 @@
 package Pack_psy;
 
 import java.awt.event.MouseEvent;
-import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  *

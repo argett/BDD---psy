@@ -127,21 +127,17 @@ public class Liste_patients extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void fillComponents() throws ClassNotFoundException, SQLException{
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:54055;databaseName=dbs-psy;integratedSecurity=true");
-        Statement stmt = con.createStatement();
-        
-        
+        // establish the connection
+        Conn_dbs connex = new Conn_dbs(); 
         
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            stmt = con.createStatement();
             String getPatients = "SELECT patientid,nom,prenom FROM Patients";
             
             int patientid;
             String nom,prenom;
             
-            ResultSet rs = stmt.executeQuery(getPatients);
+            ResultSet rs = connex.getStatement().executeQuery(getPatients);
             while(rs.next()){
                 patientid= rs.getInt("patientid");
                 nom= rs.getString("nom");

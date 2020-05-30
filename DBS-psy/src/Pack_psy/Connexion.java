@@ -18,7 +18,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
  */
 public class Connexion extends javax.swing.JFrame {
      private static Session session;
-     private static Connection conn;
 
     /**
      * Creates new form Connexion
@@ -134,7 +133,7 @@ public class Connexion extends javax.swing.JFrame {
     private void btn_connecterMouseClicked(MouseEvent evt) {
       boolean connected = true;
       if (connected) {
-        session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©", conn);
+        session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
         Psy_home home;
         try {
             home = new Psy_home(session);
@@ -156,21 +155,15 @@ public class Connexion extends javax.swing.JFrame {
       this.insert_mdp.setText("toust2");
    }
 
-   public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        conn = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
-        Statement stmt = conn.createStatement();
+   public static void main(String[] args) throws ClassNotFoundException, SQLException {        
+        Conn_dbs connex = new Conn_dbs(); 
+       
         String myQuery = "SELECT * FROM Anterieure";
-        ResultSet rs = stmt.executeQuery(myQuery);
+        ResultSet rs = connex.getStatement().executeQuery(myQuery);
 
         while(rs.next()) {
            String s = rs.getString("patientid");
            System.out.println(s);
-        }
-
-        if (conn != null) {
-           System.out.println("Connected");
         }
 
         try {

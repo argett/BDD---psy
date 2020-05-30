@@ -12,22 +12,16 @@ import java.sql.Connection;
  * @author lilian
  */
 public class Session {
-   private Connection conn;
    private int id;
    private String psychologue;
 
-    Session(int i, String n, Connection con) {
+    Session(int i, String n) {
       this.id = i;
       this.psychologue = n;
-      this.conn = con;
     }
    
     public int getId() {
         return this.id;
-    }
-
-    public Connection getConn() {
-        return conn;
     }
 
     public String getPsychologue() {
