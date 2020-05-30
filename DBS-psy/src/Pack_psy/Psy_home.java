@@ -320,14 +320,11 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
-       Liste_patients liste;
         try {
-            liste = new Liste_patients(psycho);
+            Liste_patients liste = new Liste_patients(psycho);
             liste.setVisible(true);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

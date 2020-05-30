@@ -61,8 +61,11 @@ public class Info_patients extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table_anterieure = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        table_rdv = new javax.swing.JTable();
-        lbl_rdv = new javax.swing.JLabel();
+        table_rdvPasse = new javax.swing.JTable();
+        lbl_rdvPasse = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_rdvFutur = new javax.swing.JTable();
+        lbl_rdvFutur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,12 +126,9 @@ public class Info_patients extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(table_anterieure);
 
-        table_rdv.setModel(new javax.swing.table.DefaultTableModel(
+        table_rdvPasse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Date", "Horaire", "Type", "Anxiete"
@@ -149,15 +149,48 @@ public class Info_patients extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(table_rdv);
-        if (table_rdv.getColumnModel().getColumnCount() > 0) {
-            table_rdv.getColumnModel().getColumn(0).setResizable(false);
-            table_rdv.getColumnModel().getColumn(1).setResizable(false);
-            table_rdv.getColumnModel().getColumn(2).setResizable(false);
-            table_rdv.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane2.setViewportView(table_rdvPasse);
+        if (table_rdvPasse.getColumnModel().getColumnCount() > 0) {
+            table_rdvPasse.getColumnModel().getColumn(0).setResizable(false);
+            table_rdvPasse.getColumnModel().getColumn(1).setResizable(false);
+            table_rdvPasse.getColumnModel().getColumn(2).setResizable(false);
+            table_rdvPasse.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        lbl_rdv.setText("Rendez-Vous:");
+        lbl_rdvPasse.setText("Rendez-Vous Passés:");
+
+        table_rdvFutur.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Horaire", "Type", "Anxiete"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(table_rdvFutur);
+        if (table_rdvFutur.getColumnModel().getColumnCount() > 0) {
+            table_rdvFutur.getColumnModel().getColumn(0).setResizable(false);
+            table_rdvFutur.getColumnModel().getColumn(1).setResizable(false);
+            table_rdvFutur.getColumnModel().getColumn(2).setResizable(false);
+            table_rdvFutur.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        lbl_rdvFutur.setText("Rendez-Vous Futurs:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,13 +241,16 @@ public class Info_patients extends javax.swing.JFrame {
                                     .addComponent(lbl_inDecouverte))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
-                        .addGap(66, 66, 66))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_rdvPasse)
+                            .addComponent(lbl_Sexe)
+                            .addComponent(lbl_rdvFutur))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_rdv)
-                            .addComponent(lbl_Sexe))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,10 +294,14 @@ public class Info_patients extends javax.swing.JFrame {
                             .addComponent(lbl_inDecouverte)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(lbl_rdv)
+                .addComponent(lbl_rdvPasse)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_rdvFutur)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -295,6 +335,31 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("profession")});
             }
             
+            long millis=System.currentTimeMillis();  
+            java.sql.Timestamp date=new java.sql.Timestamp(millis);
+
+            //TODO replace this with a view
+            String getRDVPasse= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
+                    + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
+                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire< '" + date
+                    + "' ORDER BY c.horaire;";
+            
+            rs = stmt.executeQuery(getRDVPasse);
+            model = (DefaultTableModel)table_rdvPasse.getModel();
+            while(rs.next()){
+                model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
+            }
+            
+            String getRDVFutur= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
+                    + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
+                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire> '" + date
+                    + "' ORDER BY c.horaire;";
+            
+            rs = stmt.executeQuery(getRDVFutur);
+            model = (DefaultTableModel)table_rdvFutur.getModel();
+            while(rs.next()){
+                model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,6 +375,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
     private javax.swing.JButton btn_quit;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbl_ProfActuelle;
     private javax.swing.JLabel lbl_Sexe;
     private javax.swing.JLabel lbl_anterieure;
@@ -326,8 +392,10 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
     private javax.swing.JLabel lbl_patientID;
     private javax.swing.JLabel lbl_prenom;
     private javax.swing.JLabel lbl_psyCo;
-    private javax.swing.JLabel lbl_rdv;
+    private javax.swing.JLabel lbl_rdvFutur;
+    private javax.swing.JLabel lbl_rdvPasse;
     private javax.swing.JTable table_anterieure;
-    private javax.swing.JTable table_rdv;
+    private javax.swing.JTable table_rdvFutur;
+    private javax.swing.JTable table_rdvPasse;
     // End of variables declaration//GEN-END:variables
 }

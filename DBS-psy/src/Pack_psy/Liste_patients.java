@@ -163,8 +163,13 @@ public class Liste_patients extends javax.swing.JFrame {
         model = (DefaultTableModel)table_calendrier.getModel();
         id = (int) model.getValueAt(row, model.findColumn("ID"));
         
-        Info_patients pf = new Info_patients(psycho, id);
-        pf.setVisible(true);
+        try {
+            Info_patients pf = new Info_patients(psycho, id);
+            pf.setVisible(true);
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }//GEN-LAST:event_table_calendrierMouseClicked
 
     /**
