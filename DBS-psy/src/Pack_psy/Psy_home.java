@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -31,10 +32,11 @@ public class Psy_home extends javax.swing.JFrame {
         initComponents();
         psycho = psy;
         this.lbl_psyCo.setText("conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
+        
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
         this.lbl_date.setText(date.format(calendar.getTime()));
-        fillComponents();
+        fillCalendar();
 
     }
 
@@ -95,6 +97,7 @@ public class Psy_home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table_calendrier.getTableHeader().setReorderingAllowed(false);
         table_calendrier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 table_calendrierMouseClicked(evt);
@@ -102,7 +105,6 @@ public class Psy_home extends javax.swing.JFrame {
         });
         tab_rdvDuJour.setViewportView(table_calendrier);
         if (table_calendrier.getColumnModel().getColumnCount() > 0) {
-            table_calendrier.getColumnModel().getColumn(0).setResizable(false);
             table_calendrier.getColumnModel().getColumn(1).setResizable(false);
             table_calendrier.getColumnModel().getColumn(2).setResizable(false);
             table_calendrier.getColumnModel().getColumn(3).setResizable(false);
@@ -206,72 +208,99 @@ public class Psy_home extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     
-    private void fillComponents() throws ClassNotFoundException, SQLException{
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
-        Statement stmt = con.createStatement();
+    private void fillCalendar() {
+        // dont forget to erase the table before make the update
+        DefaultTableModel dtm = (DefaultTableModel) table_calendrier.getModel();
+        dtm.setRowCount(0);
         
-        ArrayList<String> horaires = new ArrayList<>();
-        ArrayList<String> noms = new ArrayList<>();
-        ArrayList<String> prenoms = new ArrayList<>();
-        ArrayList<String> professions = new ArrayList<>();
-        
-        
-        model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            stmt = con.createStatement();
-            String getHoraire = "SELECT horaire FROM Consultations";
-            String getNoms = "SELECT nom FROM Patients";
-            String getPrenoms = "SELECT prenom FROM Patients";
-            String getSeance = "SELECT profession FROM Proffessions";
+            //Connect to the DBS
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
+            Statement stmt = con.createStatement();
             
-            ResultSet rsH = stmt.executeQuery(getHoraire);
-            while(rsH.next()){
-               horaires.add(rsH.getString("horaire"));
+            //Save the dbs content into lists before to fill the table, otherwise the conn will be closed after 1 update
+            ArrayList<String> horaires = new ArrayList<>();
+            ArrayList<String> noms = new ArrayList<>();
+            ArrayList<String> prenoms = new ArrayList<>();
+            ArrayList<String> professions = new ArrayList<>();
+            
+            // to make the update
+            model = (DefaultTableModel)table_calendrier.getModel();
+            try {
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
+                
+                // set the bounds of the calendar (select all rendez-vous between today and tomorrow)
+                Calendar tomorrow = Calendar.getInstance();
+                Date day = new SimpleDateFormat("yyyy-dd-MM").parse(lbl_date.getText()); // we take the day the psy is checking
+                tomorrow.setTime(day);      // we transform the date into a calendar
+                tomorrow.add(6, 1);         // we add 1 day into the calendar
+                
+                // make the queries
+                stmt = con.createStatement();
+                String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire";
+                String getNoms = "SELECT nom FROM Patients";
+                String getPrenoms = "SELECT prenom FROM Patients";
+                String getSeance = "SELECT profession FROM Proffessions";
+                
+                // save the content into lists
+                ResultSet rsH = stmt.executeQuery(getHoraire);
+                while(rsH.next()){
+                    horaires.add(rsH.getString("horaire"));
+                }
+                
+                ResultSet rsN = stmt.executeQuery(getNoms);
+                while(rsN.next()){
+                    noms.add(rsN.getString("nom"));
+                }
+                
+                ResultSet rsP = stmt.executeQuery(getPrenoms);
+                while(rsP.next()){
+                    prenoms.add(rsP.getString("prenom"));
+                }
+                
+                ResultSet rsS = stmt.executeQuery(getSeance);
+                while(rsS.next()){
+                    professions.add(rsS.getString("profession"));
+                }
+                
+                // now the querries are finished, we can update the table (and make the conn closed)
+                for(int i=0; i<horaires.size(); i++){
+                    model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});
+                }
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            ResultSet rsN = stmt.executeQuery(getNoms);            
-            while(rsN.next()){
-               noms.add(rsN.getString("nom"));
-            }
-            
-            ResultSet rsP = stmt.executeQuery(getPrenoms);           
-            while(rsP.next()){
-               prenoms.add(rsP.getString("prenom"));
-            }
-            
-            ResultSet rsS = stmt.executeQuery(getSeance);            
-            while(rsS.next()){
-               professions.add(rsS.getString("profession"));
-            }
-            
-            for(int i=0; i<horaires.size(); i++){
-                model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});                
-            }
-            
-            
         } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void btn_dateSuppMouseClicked(MouseEvent evt) {
        Calendar calendar = Calendar.getInstance();
-       SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+       SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
 
        try {
           calendar.setTime(date.parse(this.lbl_date.getText()));
        } catch (ParseException var5) {
           Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, (String)null, var5);
        }
-
+       
+       // add one day to the one the psy is checking
        calendar.add(6, 1);
        this.lbl_date.setText(date.format(calendar.getTime()));
+       fillCalendar();
     }
 
     private void btn_dateInfMouseClicked(MouseEvent evt) {
        Calendar calendar = Calendar.getInstance();
-       SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+       SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
 
        try {
           calendar.setTime(date.parse(this.lbl_date.getText()));
@@ -279,8 +308,10 @@ public class Psy_home extends javax.swing.JFrame {
           Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, (String)null, var5);
        }
 
+       // remove one day to the one the psy is checking
        calendar.add(6, -1);
        this.lbl_date.setText(date.format(calendar.getTime()));
+       fillCalendar();
     }
 
     private void table_calendrierMouseClicked(MouseEvent evt) {
@@ -289,8 +320,15 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
-       Liste_patients liste = new Liste_patients(psycho);
-       liste.setVisible(true);
+       Liste_patients liste;
+        try {
+            liste = new Liste_patients(psycho);
+            liste.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
