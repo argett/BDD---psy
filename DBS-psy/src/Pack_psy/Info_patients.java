@@ -333,10 +333,9 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             java.sql.Timestamp date= new java.sql.Timestamp(millis);
 
             //TODO replace this with a view
-            String getRDVPasse= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
-                    + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
-                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire< '" + ydmFormat.format(date)
-                    + "' ORDER BY c.horaire;";
+            String getRDVPasse= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
+                    + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time< '" + ydmFormat.format(date)
+                    + "' ORDER BY exact_time;";
             
             rs = connex.getStatement().executeQuery(getRDVPasse);
             model = (DefaultTableModel)table_rdvPasse.getModel();
@@ -344,10 +343,9 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
             }
             
-            String getRDVFutur= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
-                    + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
-                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire> '" + ydmFormat.format(date)
-                    + "' ORDER BY c.horaire;";
+            String getRDVFutur= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
+                    + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time> '" + ydmFormat.format(date)
+                    + "' ORDER BY exact_time;";
             
             rs = connex.getStatement().executeQuery(getRDVFutur);
             model = (DefaultTableModel)table_rdvFutur.getModel();
