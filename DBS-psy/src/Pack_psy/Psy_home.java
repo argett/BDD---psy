@@ -212,13 +212,14 @@ public class Psy_home extends javax.swing.JFrame {
             tomorrow.add(6, 1);         // we add 1 day into the calendar
             
             // make the queries
-            String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire";
+            String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire;";
             String getNoms = "SELECT nom FROM Patients";
             String getPrenoms = "SELECT prenom FROM Patients";
             String getSeance = "SELECT profession FROM Proffessions";
             
             // save the content into lists
             ResultSet rsH = connex.getStatement().executeQuery(getHoraire);
+
             while(rsH.next()){
                 horaires.add(rsH.getString("horaire"));
             }

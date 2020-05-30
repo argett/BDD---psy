@@ -8,6 +8,7 @@ package Pack_psy;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -304,6 +305,7 @@ public class Info_patients extends javax.swing.JFrame {
 private void fillComponents(int pid) throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
+        SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         
         try {
             String getPatients = "SELECT * FROM Patients WHERE patientid = " + Integer.toString(pid) + ";";
@@ -328,12 +330,12 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             }
             
             long millis=System.currentTimeMillis();  
-            java.sql.Timestamp date=new java.sql.Timestamp(millis);
+            java.sql.Timestamp date= new java.sql.Timestamp(millis);
 
             //TODO replace this with a view
             String getRDVPasse= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
                     + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
-                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire< '" + date
+                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire< '" + ydmFormat.format(date)
                     + "' ORDER BY c.horaire;";
             
             rs = connex.getStatement().executeQuery(getRDVPasse);
@@ -344,7 +346,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             
             String getRDVFutur= "SELECT FORMAT(c.horaire, 'dddd, MMM dd ') AS 'date', FORMAT(c.horaire, 'hh:mm') AS 'horaire', c.typerdv AS 'type', c.anxiete "
                     + "FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid "
-                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire> '" + date
+                    + "WHERE rdv.patientid = "+ Integer.toString(pid) +" AND c.horaire> '" + ydmFormat.format(date)
                     + "' ORDER BY c.horaire;";
             
             rs = connex.getStatement().executeQuery(getRDVFutur);

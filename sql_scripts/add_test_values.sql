@@ -2,9 +2,9 @@ INSERT INTO Compte_Psy (psyid, mdp)
 VALUES ('admin','password');
 
 INSERT INTO Consultations (consultationid, horaire, typerdv, prix, reglement, anxiete)
-VALUES (1,'2020-06-12 12:30','Homme',45.50,'Cheque',5),
-        (2,'2020-06-10 12:30','Enfant',50,'Especes',2),
-        (3,'2020-06-10 9:00','Couple',12.25,'Carte',9);
+VALUES (1,'2020-30-05 12:30','Homme',45.50,'Cheque',5),
+        (2,'2020-31-05 12:30','Enfant',50,'Especes',2),
+        (3,'2020-31-05 9:00','Couple',12.25,'Carte',9);
 
 INSERT INTO Postures (posture)
 VALUES ('Alonge'), ('Tendu'), ('Relax');
