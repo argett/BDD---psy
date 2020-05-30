@@ -208,7 +208,7 @@ public class Psy_home extends javax.swing.JFrame {
     
     private void fillComponents() throws ClassNotFoundException, SQLException{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:54055;databaseName=dbs-psy;integratedSecurity=true");
         Statement stmt = con.createStatement();
         
         ArrayList<String> horaires = new ArrayList<>();
@@ -289,8 +289,12 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
-       Liste_patients liste = new Liste_patients(psycho);
-       liste.setVisible(true);
+        try {
+            Liste_patients liste = new Liste_patients(psycho);
+            liste.setVisible(true);
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
