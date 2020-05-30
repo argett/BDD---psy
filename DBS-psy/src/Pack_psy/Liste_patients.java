@@ -5,11 +5,8 @@
  */
 package Pack_psy;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +20,12 @@ public class Liste_patients extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;
     
-    public Liste_patients(Session psy) throws ClassNotFoundException, SQLException{
+    public Liste_patients(Session psy, ArrayList<String> choisis) throws ClassNotFoundException, SQLException{
        this.psycho = psy;
        this.initComponents();
        this.lbl_psyCo.setText(this.psycho.getPsychologue());
        
-       fillComponents();
+       fillComponents(choisis);
     }
 
 
@@ -45,6 +42,9 @@ public class Liste_patients extends javax.swing.JFrame {
         table_calendrier = new javax.swing.JTable();
         lbl_psyCo = new javax.swing.JLabel();
         btn_exit = new javax.swing.JButton();
+        lbl_rechercher = new javax.swing.JLabel();
+        txtF_recherche = new javax.swing.JTextField();
+        btn_recherche = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,6 +92,15 @@ public class Liste_patients extends javax.swing.JFrame {
             }
         });
 
+        lbl_rechercher.setText("Rechercher un patient :");
+
+        btn_recherche.setText("Rechercher");
+        btn_recherche.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_rechercheMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,6 +111,14 @@ public class Liste_patients extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_exit)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(lbl_rechercher, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtF_recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btn_recherche)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -115,7 +132,12 @@ public class Liste_patients extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_exit))
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_rechercher, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_recherche)
+                    .addComponent(txtF_recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(46, 46, 46)
@@ -126,24 +148,23 @@ public class Liste_patients extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void fillComponents() throws ClassNotFoundException, SQLException{
+    private void fillComponents(ArrayList<String> choisis) throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
         
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            String getPatients = "SELECT patientid,nom,prenom FROM Patients";
-            
-            int patientid;
             String nom,prenom;
-            
+            String getPatients = "SELECT patientid,nom,prenom FROM Patients";            
+            int patientid;
+
             ResultSet rs = connex.getStatement().executeQuery(getPatients);
             while(rs.next()){
-                patientid= rs.getInt("patientid");
+                patientid = rs.getInt("patientid");
                 nom= rs.getString("nom");
                 prenom= rs.getString("prenom");
                 model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
-            }
+            }       
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -168,6 +189,30 @@ public class Liste_patients extends javax.swing.JFrame {
 
     }//GEN-LAST:event_table_calendrierMouseClicked
 
+    private void btn_rechercheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rechercheMouseClicked
+        try {
+            int patientid;
+            String nom, prenom;
+            String patient = txtF_recherche.getText();
+            Conn_dbs connex = new Conn_dbs();
+            String myQuery = "SELECT patientid, nom, prenom FROM Patients WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%'";
+            ResultSet rs = connex.getStatement().executeQuery(myQuery);            
+            
+            // dont forget to erase the table before make the update
+            DefaultTableModel dtm = (DefaultTableModel) table_calendrier.getModel();
+            dtm.setRowCount(0);
+        
+            while(rs.next()){
+                patientid = rs.getInt("patientid");
+                nom = rs.getString("nom");
+                prenom = rs.getString("prenom");
+                model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
+            }  
+        } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_rechercheMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -175,8 +220,11 @@ public class Liste_patients extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_exit;
+    private javax.swing.JButton btn_recherche;
     private javax.swing.JLabel lbl_psyCo;
+    private javax.swing.JLabel lbl_rechercher;
     private javax.swing.JScrollPane tab_rdvDuJour;
     private javax.swing.JTable table_calendrier;
+    private javax.swing.JTextField txtF_recherche;
     // End of variables declaration//GEN-END:variables
 }

@@ -53,9 +53,6 @@ public class Psy_home extends javax.swing.JFrame {
         lbl_date = new javax.swing.JLabel();
         btn_dateSupp = new javax.swing.JButton();
         btn_dateInf = new javax.swing.JButton();
-        lbl_rechercher = new javax.swing.JLabel();
-        txtF_recherche = new javax.swing.JTextField();
-        btn_recherche = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
         btn_deco = new javax.swing.JButton();
 
@@ -124,10 +121,6 @@ public class Psy_home extends javax.swing.JFrame {
             }
         });
 
-        lbl_rechercher.setText("Rechercher un patient :");
-
-        btn_recherche.setText("Rechercher");
-
         btn_exit.setText(" X ");
         btn_exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -154,12 +147,6 @@ public class Psy_home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_rechercher)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtF_recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_recherche))
-                        .addGroup(layout.createSequentialGroup()
                             .addComponent(btn_dateInf)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lbl_date, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,12 +171,7 @@ public class Psy_home extends javax.swing.JFrame {
                     .addComponent(btn_dateSupp))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_rechercher)
-                    .addComponent(txtF_recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_recherche))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(62, 62, 62)
                 .addComponent(btn_listePatients)
                 .addGap(50, 50, 50))
         );
@@ -308,7 +290,7 @@ public class Psy_home extends javax.swing.JFrame {
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
         try {
-            Liste_patients liste = new Liste_patients(psycho);
+            Liste_patients liste = new Liste_patients(psycho, null);
             liste.setVisible(true);
         } catch (ClassNotFoundException | SQLException e){
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
@@ -328,12 +310,9 @@ public class Psy_home extends javax.swing.JFrame {
     private javax.swing.JButton btn_deco;
     private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_listePatients;
-    private javax.swing.JButton btn_recherche;
     private javax.swing.JLabel lbl_date;
     private javax.swing.JLabel lbl_psyCo;
-    private javax.swing.JLabel lbl_rechercher;
     private javax.swing.JScrollPane tab_rdvDuJour;
     private javax.swing.JTable table_calendrier;
-    private javax.swing.JTextField txtF_recherche;
     // End of variables declaration//GEN-END:variables
 }

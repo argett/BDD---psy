@@ -156,8 +156,7 @@ public class Connexion extends javax.swing.JFrame {
    }
 
    public static void main(String[] args) throws ClassNotFoundException, SQLException {        
-        Conn_dbs connex = new Conn_dbs(); 
-       
+        Conn_dbs connex = new Conn_dbs();        
         String myQuery = "SELECT * FROM Anterieure";
         ResultSet rs = connex.getStatement().executeQuery(myQuery);
 
