@@ -242,11 +242,7 @@ public class Psy_home extends javax.swing.JFrame {
             for(int i=0; i<horaires.size(); i++){
                 model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});
             }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -268,24 +264,46 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void btn_dateInfMouseClicked(MouseEvent evt) {
-       Calendar calendar = Calendar.getInstance();
-       SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
 
-       try {
-          calendar.setTime(date.parse(this.lbl_date.getText()));
-       } catch (ParseException var5) {
-          Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, (String)null, var5);
-       }
+        try {
+           calendar.setTime(date.parse(this.lbl_date.getText()));
+        } catch (ParseException var5) {
+           Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, (String)null, var5);
+        }
 
-       // remove one day to the one the psy is checking
-       calendar.add(6, -1);
-       this.lbl_date.setText(date.format(calendar.getTime()));
-       fillCalendar();
+        // remove one day to the one the psy is checking
+        calendar.add(6, -1);
+        this.lbl_date.setText(date.format(calendar.getTime()));
+        fillCalendar();
     }
 
     private void table_calendrierMouseClicked(MouseEvent evt) {
-       Patient_fiche pf = new Patient_fiche(psycho);
-       pf.setVisible(true);
+        int ID = test();
+        try { 
+            Info_patients pf = new Info_patients(psycho, ID);
+            pf.setVisible(true);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    private int test(){
+        String nom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 1);
+        String prenom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 2);
+        try {
+            Conn_dbs connex = new Conn_dbs();
+            String myQuery = "SELECT patientid FROM Patients WHERE nom = '"+ nom +"' AND prenom = '"+ prenom +"'";
+            ResultSet rs = connex.getStatement().executeQuery(myQuery);
+            while(rs.next()){
+                int i = rs.getInt(1);
+                return i;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
