@@ -55,6 +55,7 @@ public class Psy_home extends javax.swing.JFrame {
         btn_dateInf = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
         btn_deco = new javax.swing.JButton();
+        btn_addConsultation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -130,6 +131,13 @@ public class Psy_home extends javax.swing.JFrame {
 
         btn_deco.setText("Deconnecter");
 
+        btn_addConsultation.setText("Ajouter une consultation");
+        btn_addConsultation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addConsultationMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,7 +152,7 @@ public class Psy_home extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btn_dateInf)
@@ -153,7 +161,10 @@ public class Psy_home extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btn_dateSupp))
                         .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_listePatients))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_addConsultation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_listePatients)))
                 .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -172,7 +183,9 @@ public class Psy_home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62)
-                .addComponent(btn_listePatients)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_listePatients)
+                    .addComponent(btn_addConsultation))
                 .addGap(50, 50, 50))
         );
 
@@ -182,6 +195,11 @@ public class Psy_home extends javax.swing.JFrame {
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
         this.dispose();
     }//GEN-LAST:event_btn_exitMouseClicked
+
+    private void btn_addConsultationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addConsultationMouseClicked
+        New_consultation nc = new New_consultation();
+        nc.setVisible(true);
+    }//GEN-LAST:event_btn_addConsultationMouseClicked
 
     /**
      * @param args the command line arguments
@@ -215,7 +233,7 @@ public class Psy_home extends javax.swing.JFrame {
             String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire;";
             String getNoms = "SELECT nom FROM Patients";
             String getPrenoms = "SELECT prenom FROM Patients";
-            String getSeance = "SELECT profession FROM Proffessions";
+            String getSeance = "SELECT profession FROM Patients";
             
             // save the content into lists
             ResultSet rsH = connex.getStatement().executeQuery(getHoraire);
@@ -281,7 +299,7 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void table_calendrierMouseClicked(MouseEvent evt) {
-        int ID = test();
+        int ID = updateCalendar();
         try { 
             Info_patients pf = new Info_patients(psycho, ID);
             pf.setVisible(true);
@@ -290,7 +308,7 @@ public class Psy_home extends javax.swing.JFrame {
         } 
     }
     
-    private int test(){
+    private int updateCalendar(){
         String nom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 1);
         String prenom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 2);
         try {
@@ -324,6 +342,7 @@ public class Psy_home extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addConsultation;
     private javax.swing.JButton btn_dateInf;
     private javax.swing.JButton btn_dateSupp;
     private javax.swing.JButton btn_deco;
