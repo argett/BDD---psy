@@ -12,11 +12,11 @@ VALUES ('Alonge'), ('Tendu'), ('Relax');
 INSERT INTO Professions (profession)
 VALUES ('Bricoleur'), ('Ecoliere'), ('Ecrivaine'), ('Chanteur'), ('Cuisinier'), ('Danseur');
 
-INSERT INTO Patients (nom, prenom, datenaissance, sexe, mdp, connupar, profession)
-VALUES ('Smith', 'John', '2000-01-01','M','1234','Pub','Bricoleur'),
-       ('Justine','Tinejust','2020-02-03','F', 'abcd','Pub','Ecoliere'),
-       ('Doe','Jane','1992-05-05','F','0000','Ami(e)','Ecrivaine'),
-       ('Doe','William','1992-06-06','M','Fido33','Ami(e)','Chanteur');
+INSERT INTO Patients (nom, prenom, email, datenaissance, sexe, mdp, connupar, profession)
+VALUES ('Smith', 'John', 'John.smith@fakemail.com', '2000-01-01','M','1234','Pub','Bricoleur'),
+       ('Time','Justine','JustineTime@fakemail.com','2020-02-03','F', 'abcd','Pub','Ecoliere'),
+       ('Doe','Jane','Jdoe@fakemail.com','1992-05-05','F','0000','Ami(e)','Ecrivaine'),
+       ('Doe','William','Williwonder@fakemail.com','1992-06-06','M','Fido33','Ami(e)','Chanteur');
 
 INSERT INTO Anterieure (patientid, profession)
 VALUES (1,'Cuisinier'),(3,'Danseur'),(3,'Cuisinier');

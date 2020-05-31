@@ -67,6 +67,7 @@ CREATE TABLE Patients(
         patientid     Int NOT NULL IDENTITY,
         nom           Varchar (20) NOT NULL ,
         prenom        Varchar (20) NOT NULL ,
+		email         Varchar (80) NOT NULL ,
         datenaissance Date NOT NULL ,
         sexe          Char (1) NOT NULL ,
         mdp           Varchar (30) NOT NULL,
