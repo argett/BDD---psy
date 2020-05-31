@@ -277,7 +277,7 @@ public class New_patients extends javax.swing.JFrame {
                 stmt.executeUpdate(insertPatient);
                 if(stmt.executeUpdate(insertPatient)==0)
                 {
-                    throw new SQLException();
+                    throw new SQLException("No data update!");
                 }
                 
                 this.dispose();

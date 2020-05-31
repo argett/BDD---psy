@@ -8,6 +8,7 @@ package Pack_psy;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +18,14 @@ import javax.swing.table.DefaultTableModel;
 public class Info_patients extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;
+    int pid;
 
-    public Info_patients(Session psy, int pid) throws ClassNotFoundException, SQLException{
+    public Info_patients(Session psy, int inPid) throws ClassNotFoundException, SQLException{
         this.psycho = psy;
         this.initComponents();
         this.lbl_psyCo.setText(this.psycho.getPsychologue());
 
+        pid= inPid;
         fillComponents(pid);
     }
 
@@ -61,6 +64,9 @@ public class Info_patients extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         table_rdvFutur = new javax.swing.JTable();
         lbl_rdvFutur = new javax.swing.JLabel();
+        lbl_oldProfession = new javax.swing.JLabel();
+        inProfession = new javax.swing.JTextField();
+        btn_ajouterProf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,7 +114,7 @@ public class Info_patients extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Proffession"
+                "Profession"
             }
         ) {
             Class[] types = new Class [] {
@@ -187,6 +193,17 @@ public class Info_patients extends javax.swing.JFrame {
 
         lbl_rdvFutur.setText("Rendez-Vous Futurs:");
 
+        lbl_oldProfession.setText("Ancienne Profession:");
+
+        inProfession.setText("Profession");
+
+        btn_ajouterProf.setText("Ajouter");
+        btn_ajouterProf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ajouterProfMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -226,13 +243,19 @@ public class Info_patients extends javax.swing.JFrame {
                                         .addGap(104, 104, 104)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lbl_anterieure)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
                                                 .addComponent(lbl_ProfActuelle)
                                                 .addGap(31, 31, 31)
-                                                .addComponent(lbl_inProfActuelle))))
+                                                .addComponent(lbl_inProfActuelle))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbl_anterieure)
+                                                    .addComponent(lbl_oldProfession))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(btn_ajouterProf, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                                        .addComponent(inProfession))))))
                                     .addComponent(lbl_inDecouverte))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
@@ -243,7 +266,7 @@ public class Info_patients extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                             .addComponent(jScrollPane2))
                         .addGap(66, 66, 66))))
         );
@@ -268,14 +291,23 @@ public class Info_patients extends javax.swing.JFrame {
                             .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_quit))
                         .addGap(31, 31, 31)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_oldProfession)
+                    .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_ajouterProf)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_prenom)
-                            .addComponent(lbl_inPrenom)
-                            .addComponent(lbl_anterieure))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbl_prenom)
+                                .addComponent(lbl_inPrenom))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(lbl_anterieure)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_dateNaissance)
                             .addComponent(lbl_inDateNaissance))
@@ -286,10 +318,12 @@ public class Info_patients extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_decouverte)
-                            .addComponent(lbl_inDecouverte)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(lbl_rdvPasse)
+                            .addComponent(lbl_inDecouverte))
+                        .addGap(42, 42, 42)
+                        .addComponent(lbl_rdvPasse))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -301,6 +335,32 @@ public class Info_patients extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_ajouterProfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ajouterProfMouseClicked
+        Conn_dbs connex = new Conn_dbs(); 
+        String oldProf = inProfession.getText();
+        
+        if(!oldProf.isEmpty() && !oldProf.equals("Profession") && oldProf.length()<30)
+        {
+            try{
+                Statement stmt = connex.getStatement();
+                String archiveProf = "INSERT INTO Anterieure (patientid, profession) VALUES ("+pid+",'"+oldProf+"')";
+                
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Professions WHERE profession = '" + oldProf + "';");
+                if(!rs.next())
+                {
+                    stmt.executeUpdate("INSERT INTO Professions (profession) VALUES ('" + oldProf + "');");
+                }
+                if(stmt.executeUpdate(archiveProf)!=0)
+                {
+                        model = (DefaultTableModel)table_anterieure.getModel();
+                        model.insertRow(model.getRowCount(), new Object[]{oldProf});
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btn_ajouterProfMouseClicked
 
 private void fillComponents(int pid) throws ClassNotFoundException, SQLException{
         // establish the connection
@@ -364,7 +424,9 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_ajouterProf;
     private javax.swing.JButton btn_quit;
+    private javax.swing.JTextField inProfession;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -381,6 +443,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
     private javax.swing.JLabel lbl_inProfActuelle;
     private javax.swing.JLabel lbl_inSexe;
     private javax.swing.JLabel lbl_nom;
+    private javax.swing.JLabel lbl_oldProfession;
     private javax.swing.JLabel lbl_patientID;
     private javax.swing.JLabel lbl_prenom;
     private javax.swing.JLabel lbl_psyCo;

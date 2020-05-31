@@ -64,15 +64,24 @@
                                       <Component id="lbl_inPrenom" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="lbl_anterieure" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane1" min="-2" pref="94" max="-2" attributes="0"/>
-                                          </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lbl_ProfActuelle" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                                               <Component id="lbl_inProfActuelle" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lbl_anterieure" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lbl_oldProfession" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="btn_ajouterProf" pref="94" max="32767" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="jScrollPane1" pref="94" max="32767" attributes="0"/>
+                                                      <Component id="inProfession" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -92,7 +101,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" pref="489" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="494" max="32767" attributes="0"/>
                           <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="66" pref="66" max="-2" attributes="0"/>
@@ -128,15 +137,27 @@
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbl_oldProfession" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inProfession" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btn_ajouterProf" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_prenom" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inPrenom" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_anterieure" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_prenom" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_inPrenom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Component id="lbl_anterieure" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_dateNaissance" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_inDateNaissance" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -151,11 +172,14 @@
                           <Component id="lbl_decouverte" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_inDecouverte" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="lbl_rdvPasse" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="115" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="lbl_rdvPasse" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="149" max="-2" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -267,7 +291,7 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="1" rowCount="0">
-                <Column editable="true" title="Proffession" type="java.lang.String"/>
+                <Column editable="true" title="Profession" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -391,6 +415,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Rendez-Vous Futurs:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_oldProfession">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ancienne Profession:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="inProfession">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Profession"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_ajouterProf">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ajouter"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_ajouterProfMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
