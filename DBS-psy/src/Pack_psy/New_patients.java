@@ -24,7 +24,7 @@ public class New_patients extends javax.swing.JFrame {
     public New_patients(Session psy) throws ClassNotFoundException, SQLException{
         this.psycho = psy;
         this.initComponents();
-        this.lbl_psyCo.setText(this.psycho.getPsychologue());
+        this.lbl_psyCo.setText(this.psycho.getInfos());
     }
 
 

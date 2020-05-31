@@ -11,20 +11,18 @@ package Pack_psy;
  */
 public class Session {
    private String type; // patient or psy
-   private int id;
+   private String id;
 
-    Session(int i, String t) {
-      this.id = i;
+    Session(String id, String t) {
+      this.id = id;
       this.type = t;
     }
    
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
-    public String getPsychologue() {
-        return "en atente, WIP";
-    }
-   
-   
+    public String getInfos() {
+        return id; 
+    } 
 }

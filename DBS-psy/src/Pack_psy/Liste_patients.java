@@ -23,7 +23,7 @@ public class Liste_patients extends javax.swing.JFrame {
     public Liste_patients(Session psy, ArrayList<String> choisis) throws ClassNotFoundException, SQLException{
        this.psycho = psy;
        this.initComponents();
-       this.lbl_psyCo.setText(this.psycho.getPsychologue());
+       this.lbl_psyCo.setText(psycho.getInfos());
        
        fillComponents(choisis);
     }
@@ -54,11 +54,11 @@ public class Liste_patients extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nom", "Prénom"
+                "Mail", "Nom", "Prénom"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -165,13 +165,12 @@ public class Liste_patients extends javax.swing.JFrame {
         
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            String nom,prenom;
-            String getPatients = "SELECT patientid,nom,prenom FROM Patients";            
-            int patientid;
+            String nom,prenom,patientid;
+            String getPatients = "SELECT email,nom,prenom FROM Patients";            
 
             ResultSet rs = connex.getStatement().executeQuery(getPatients);
             while(rs.next()){
-                patientid = rs.getInt("patientid");
+                patientid = rs.getString("email");
                 nom= rs.getString("nom");
                 prenom= rs.getString("prenom");
                 model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
@@ -186,27 +185,27 @@ public class Liste_patients extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitMouseClicked
 
     private void table_calendrierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_calendrierMouseClicked
-        int row, id;
+        int row;
         row=table_calendrier.rowAtPoint(evt.getPoint());
         model = (DefaultTableModel)table_calendrier.getModel();
-        id = (int) model.getValueAt(row, model.findColumn("ID"));
         
         try {
-            Info_patient pf = new Info_patient(psycho, id);
+            Info_patient pf = new Info_patient(psycho, (String) model.getValueAt(row, model.findColumn("Mail")));
             pf.setVisible(true);
-        } catch (ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException e){
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException ex) {
+            Logger.getLogger(Liste_patients.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_table_calendrierMouseClicked
 
     private void btn_rechercheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rechercheMouseClicked
         try {
-            int patientid;
-            String nom, prenom;
+            String nom, prenom, patientid;
             String patient = txtF_recherche.getText();
             Conn_dbs connex = new Conn_dbs();
-            String myQuery = "SELECT patientid, nom, prenom FROM Patients WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%'";
+            String myQuery = "SELECT email, nom, prenom FROM Patients WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%'";
             ResultSet rs = connex.getStatement().executeQuery(myQuery);            
             
             // dont forget to erase the table before make the update
@@ -214,7 +213,7 @@ public class Liste_patients extends javax.swing.JFrame {
             dtm.setRowCount(0);
         
             while(rs.next()){
-                patientid = rs.getInt("patientid");
+                patientid = rs.getString("email");
                 nom = rs.getString("nom");
                 prenom = rs.getString("prenom");
                 model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});

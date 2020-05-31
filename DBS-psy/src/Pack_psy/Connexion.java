@@ -23,6 +23,8 @@ public class Connexion extends javax.swing.JFrame {
      * Creates new form Connexion
      */
     public Connexion() {
+        System.out.println("pseudo : Jdoe@fakemail.com");
+        System.out.println("mail : 0000");
         initComponents();
     }
 
@@ -144,12 +146,12 @@ public class Connexion extends javax.swing.JFrame {
             boolean connected = false;
             Conn_dbs connex = new Conn_dbs();
             String psy = "SELECT psyid FROM Compte_Psy WHERE psyid = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
-            String client = "SELECT patientid FROM Patients WHERE email = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
+            String client = "SELECT email FROM Patients WHERE email = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
             ResultSet infoPsy = connex.getStatement().executeQuery(psy);
             ResultSet infoPatient = connex.getStatement().executeQuery(client);
 
             while(infoPsy.next()){
-                session = new Session(-1, "Psychologue");
+                session = new Session("administrator", "Psychologue");
                 Psy_home home;
                 try {
                     home = new Psy_home(session);
@@ -162,12 +164,12 @@ public class Connexion extends javax.swing.JFrame {
             }
 
             while(infoPatient.next()){
-                session = new Session(Integer.valueOf(infoPatient.getString(1)), "Psychologue");
+                session = new Session(infoPatient.getString(1), "Patient");
                 Info_patient pat;
                 try {
-                    pat = new Info_patient(session, Integer.valueOf(infoPatient.getString(1)));
+                    pat = new Info_patient(session, infoPatient.getString(1));
                     pat.setVisible(true);
-                } catch (ClassNotFoundException | SQLException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 this.dispose();
