@@ -20,13 +20,11 @@ public class Info_patient extends javax.swing.JFrame {
     DefaultTableModel model;
     int pid;
 
-    public Info_patient(Session psy, int inPid) throws ClassNotFoundException, SQLException{
+    public Info_patient(Session psy, String inMail) throws ClassNotFoundException, SQLException{
         this.psycho = psy;
         this.initComponents();
-        this.lbl_psyCo.setText(this.psycho.getPsychologue());
-
-        pid= inPid;
-        fillComponents(pid);
+        this.lbl_psyCo.setText(psycho.getInfos());
+        fillComponents(inMail);
     }
 
 
@@ -378,13 +376,13 @@ public class Info_patient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ajouterProfMouseClicked
 
-private void fillComponents(int pid) throws ClassNotFoundException, SQLException{
+private void fillComponents(String inMail) throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
         SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         
         try {
-            String getPatients = "SELECT * FROM Patients WHERE patientid = " + Integer.toString(pid) + ";";
+            String getPatients = "SELECT * FROM Patients WHERE email = '" + inMail + "';";
             
             ResultSet rs = connex.getStatement().executeQuery(getPatients);
             rs.next();
@@ -397,7 +395,7 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             lbl_inProfActuelle.setText(rs.getString("profession"));
             lbl_inDecouverte.setText(rs.getString("connupar"));
             
-            String getAnterieures = "SELECT profession FROM Anterieure WHERE patientid = " + Integer.toString(pid) + ";";
+            String getAnterieures = "SELECT profession FROM Anterieure WHERE email = '" + inMail + ";";
             
             rs = connex.getStatement().executeQuery(getAnterieures);
             
@@ -408,13 +406,13 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             
             long millis=System.currentTimeMillis();  
             java.sql.Timestamp date= new java.sql.Timestamp(millis);
-
+            /*
             //TODO replace this with a view
             String getRDVPasse= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
                     + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time< '" + ydmFormat.format(date)
                     + "' ORDER BY exact_time;";
-            
             rs = connex.getStatement().executeQuery(getRDVPasse);
+            
             model = (DefaultTableModel)table_rdvPasse.getModel();
             while(rs.next()){
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
@@ -423,12 +421,13 @@ private void fillComponents(int pid) throws ClassNotFoundException, SQLException
             String getRDVFutur= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
                     + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time> '" + ydmFormat.format(date)
                     + "' ORDER BY exact_time;";
-            
             rs = connex.getStatement().executeQuery(getRDVFutur);
+
             model = (DefaultTableModel)table_rdvFutur.getModel();
             while(rs.next()){
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
             }
+            */
             
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);

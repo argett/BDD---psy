@@ -18,11 +18,10 @@ import java.util.logging.Logger;
  */
 public class Conn_dbs {    
     private static Connection conn;
-    private Class fN;
      
     Conn_dbs(){
         try {
-            fN = Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
             
             if (conn == null) {
@@ -44,5 +43,13 @@ public class Conn_dbs {
         System.exit(1);
         return null;
     }   
+    
+    public void close(){
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Conn_dbs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

@@ -100,6 +100,7 @@ public class Psy_home extends javax.swing.JFrame {
         });
         tab_rdvDuJour.setViewportView(table_calendrier);
         if (table_calendrier.getColumnModel().getColumnCount() > 0) {
+            table_calendrier.getColumnModel().getColumn(0).setResizable(false);
             table_calendrier.getColumnModel().getColumn(1).setResizable(false);
             table_calendrier.getColumnModel().getColumn(2).setResizable(false);
             table_calendrier.getColumnModel().getColumn(3).setResizable(false);
@@ -239,7 +240,7 @@ public class Psy_home extends javax.swing.JFrame {
             ResultSet rsH = connex.getStatement().executeQuery(getHoraire);
 
             while(rsH.next()){
-                horaires.add(rsH.getString("horaire"));
+                horaires.add(rsH.getString("horaire").substring(11, 16)); // we only want the hours & minutes
             }
 
             ResultSet rsN = connex.getStatement().executeQuery(getNoms);
@@ -299,30 +300,29 @@ public class Psy_home extends javax.swing.JFrame {
     }
 
     private void table_calendrierMouseClicked(MouseEvent evt) {
-        int ID = updateCalendar();
-        try { 
-            Info_patient pf = new Info_patient(psycho, ID);
+        try {
+            String ID = updateCalendar();
+            Info_patient pf = new Info_patient(psycho, ID); 
             pf.setVisible(true);
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
     
-    private int updateCalendar(){
+    private String updateCalendar(){
         String nom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 1);
         String prenom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 2);
         try {
             Conn_dbs connex = new Conn_dbs();
-            String myQuery = "SELECT patientid FROM Patients WHERE nom = '"+ nom +"' AND prenom = '"+ prenom +"'";
+            String myQuery = "SELECT email FROM Patients WHERE nom = '"+ nom +"' AND prenom = '"+ prenom +"'";
             ResultSet rs = connex.getStatement().executeQuery(myQuery);
             while(rs.next()){
-                int i = rs.getInt(1);
-                return i;
+                return rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;
+        return "";
     }
 
     private void btn_listePatientsMouseClicked(MouseEvent evt) {
