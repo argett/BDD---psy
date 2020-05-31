@@ -216,7 +216,7 @@ public class Liste_patients extends javax.swing.JFrame {
                 email = rs.getString("email");
                 nom = rs.getString("nom");
                 prenom = rs.getString("prenom");
-                model.insertRow(model.getRowCount(), new Object[]{email,nom,prenom});
+                model.insertRow(model.getRowCount(), new Object[]{nom,prenom,email});
             }  
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
