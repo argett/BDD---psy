@@ -165,15 +165,15 @@ public class Liste_patients extends javax.swing.JFrame {
         
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
-            String nom,prenom,patientid;
+            String nom,prenom,email;
             String getPatients = "SELECT email,nom,prenom FROM Patients";            
 
             ResultSet rs = connex.getStatement().executeQuery(getPatients);
             while(rs.next()){
-                patientid = rs.getString("email");
+                email = rs.getString("email");
                 nom= rs.getString("nom");
                 prenom= rs.getString("prenom");
-                model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
+                model.insertRow(model.getRowCount(), new Object[]{nom,prenom,email});
             }       
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,7 +202,7 @@ public class Liste_patients extends javax.swing.JFrame {
 
     private void btn_rechercheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rechercheMouseClicked
         try {
-            String nom, prenom, patientid;
+            String nom, prenom, email;
             String patient = txtF_recherche.getText();
             Conn_dbs connex = new Conn_dbs();
             String myQuery = "SELECT email, nom, prenom FROM Patients WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%'";
@@ -213,10 +213,10 @@ public class Liste_patients extends javax.swing.JFrame {
             dtm.setRowCount(0);
         
             while(rs.next()){
-                patientid = rs.getString("email");
+                email = rs.getString("email");
                 nom = rs.getString("nom");
                 prenom = rs.getString("prenom");
-                model.insertRow(model.getRowCount(), new Object[]{patientid,nom,prenom});
+                model.insertRow(model.getRowCount(), new Object[]{email,nom,prenom});
             }  
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
