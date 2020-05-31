@@ -1,5 +1,16 @@
 package Pack_psy;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,12 +22,14 @@ package Pack_psy;
  * @author lilian
  */
 public class New_consultation extends javax.swing.JFrame {
-
+    DefaultTableModel modelCur;
+    DefaultTableModel modelAll;
     /**
      * Creates new form New_consultation
      */
-    public New_consultation() {
+    public New_consultation() throws ClassNotFoundException, SQLException{
         initComponents();
+        fillComponents();
     }
 
     /**
@@ -28,48 +41,47 @@ public class New_consultation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        comboBox_p1 = new javax.swing.JComboBox<>();
         lbl_patient = new javax.swing.JLabel();
         lbl_horaire = new javax.swing.JLabel();
-        comboBox_p2 = new javax.swing.JComboBox<>();
-        lbl_rdvType = new javax.swing.JLabel();
         lbl_prix = new javax.swing.JLabel();
         lbl_reglement = new javax.swing.JLabel();
-        comboBox_horaire = new javax.swing.JComboBox<>();
-        comboBox_rdvType = new javax.swing.JComboBox<>();
         txtF_prix = new javax.swing.JTextField();
-        comboBox_reglement = new javax.swing.JComboBox<>();
+        cbox_reglement = new javax.swing.JComboBox<>();
         lbl_anxiete = new javax.swing.JLabel();
-        comboBox_anxiete = new javax.swing.JComboBox<>();
         btn_exit = new javax.swing.JButton();
+        tab_rdvDuJour = new javax.swing.JScrollPane();
+        table_curPatients = new javax.swing.JTable();
+        lbl_patient1 = new javax.swing.JLabel();
+        tab_rdvDuJour1 = new javax.swing.JScrollPane();
+        table_allPatients = new javax.swing.JTable();
+        btn_getPatient = new javax.swing.JButton();
+        cbox_anxiete = new javax.swing.JComboBox<>();
+        inHoraire = new javax.swing.JTextField();
+        lbl_date = new javax.swing.JLabel();
+        inDate = new javax.swing.JTextField();
+        btn_addRDV = new javax.swing.JButton();
+        lbl_error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        comboBox_p1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lbl_patient.setText("Patient(s)");
+        lbl_patient.setText("Patient(s) in RDV:");
 
         lbl_horaire.setText("Horaire :");
-
-        comboBox_p2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lbl_rdvType.setText("Type de rdv :");
 
         lbl_prix.setText("Prix :");
 
         lbl_reglement.setText("Règlement :");
 
-        comboBox_horaire.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtF_prix.setText("0.00");
+        txtF_prix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtF_prixActionPerformed(evt);
+            }
+        });
 
-        comboBox_rdvType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtF_prix.setText("jTextField1");
-
-        comboBox_reglement.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbox_reglement.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Carte", "Cheque", "Especes" }));
 
         lbl_anxiete.setText("Anxiété :");
-
-        comboBox_anxiete.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btn_exit.setText(" X ");
         btn_exit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,80 +90,213 @@ public class New_consultation extends javax.swing.JFrame {
             }
         });
 
+        table_curPatients.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nom", "Prénom", "Mail"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_curPatients.setRowSelectionAllowed(false);
+        tab_rdvDuJour.setViewportView(table_curPatients);
+        if (table_curPatients.getColumnModel().getColumnCount() > 0) {
+            table_curPatients.getColumnModel().getColumn(0).setResizable(false);
+            table_curPatients.getColumnModel().getColumn(1).setResizable(false);
+            table_curPatients.getColumnModel().getColumn(2).setResizable(false);
+            table_curPatients.getColumnModel().getColumn(2).setPreferredWidth(150);
+        }
+
+        lbl_patient1.setText("All Patients:");
+
+        table_allPatients.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nom", "Prénom", "Mail"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tab_rdvDuJour1.setViewportView(table_allPatients);
+        if (table_allPatients.getColumnModel().getColumnCount() > 0) {
+            table_allPatients.getColumnModel().getColumn(0).setResizable(false);
+            table_allPatients.getColumnModel().getColumn(1).setResizable(false);
+            table_allPatients.getColumnModel().getColumn(2).setResizable(false);
+            table_allPatients.getColumnModel().getColumn(2).setPreferredWidth(150);
+        }
+
+        btn_getPatient.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btn_getPatient.setText("<");
+        btn_getPatient.setAlignmentY(0.0F);
+        btn_getPatient.setSelected(true);
+        btn_getPatient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_getPatientMouseClicked(evt);
+            }
+        });
+        btn_getPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_getPatientActionPerformed(evt);
+            }
+        });
+
+        cbox_anxiete.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
+        inHoraire.setText("hh:mm");
+        inHoraire.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inHoraireActionPerformed(evt);
+            }
+        });
+
+        lbl_date.setText("Date: ");
+
+        inDate.setText("YYYY-MM-DD");
+        inDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inDateActionPerformed(evt);
+            }
+        });
+
+        btn_addRDV.setText("Ajouter Consultation");
+        btn_addRDV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addRDVMouseClicked(evt);
+            }
+        });
+        btn_addRDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addRDVActionPerformed(evt);
+            }
+        });
+
+        lbl_error.setForeground(new java.awt.Color(150, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(309, 907, Short.MAX_VALUE)
+                .addComponent(btn_exit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_rdvType)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboBox_rdvType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_horaire)
-                            .addGap(81, 81, 81)
-                            .addComponent(comboBox_horaire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_patient)
-                            .addComponent(lbl_prix))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(comboBox_p1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboBox_p2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                                .addComponent(btn_exit))
-                            .addComponent(txtF_prix, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_anxiete)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboBox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_reglement)
-                            .addGap(62, 62, 62)
-                            .addComponent(comboBox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_reglement)
+                                    .addComponent(lbl_anxiete))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_prix)
+                                    .addComponent(lbl_horaire)
+                                    .addComponent(lbl_date))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtF_prix))
+                                        .addGap(26, 26, 26)))))
+                        .addGap(132, 132, 132))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_getPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_patient1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(451, 451, 451)
+                .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_addRDV)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_exit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_patient)
-                            .addComponent(comboBox_p1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBox_p2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbl_patient1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_exit)))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_horaire)
-                    .addComponent(comboBox_horaire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_rdvType)
-                    .addComponent(comboBox_rdvType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_prix)
-                    .addComponent(txtF_prix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_reglement)
-                    .addComponent(comboBox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_anxiete)
-                    .addComponent(comboBox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(1, 1, 1)
+                        .addComponent(lbl_patient)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_getPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_date)
+                            .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_horaire)
+                            .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_prix)
+                            .addComponent(txtF_prix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_reglement)
+                            .addComponent(cbox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_anxiete)
+                            .addComponent(cbox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_addRDV)
+                    .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -161,20 +306,151 @@ public class New_consultation extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_exitMouseClicked
 
+    private void btn_getPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_getPatientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_getPatientActionPerformed
+
+    private void inHoraireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inHoraireActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inHoraireActionPerformed
+
+    private void txtF_prixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_prixActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtF_prixActionPerformed
+
+    private void inDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inDateActionPerformed
+
+    private void btn_addRDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addRDVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addRDVActionPerformed
+
+    private void btn_getPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_getPatientMouseClicked
+        int rowselect = table_allPatients.getSelectedRow();
+        if(modelCur.getRowCount()<3 && rowselect!=-1)
+        {
+            String email,nom,prenom;
+            email = (String) modelAll.getValueAt(rowselect, modelAll.findColumn("Mail"));
+            nom = (String) modelAll.getValueAt(rowselect, modelAll.findColumn("Nom"));
+            prenom = (String) modelAll.getValueAt(rowselect, modelAll.findColumn("Prénom"));
+            
+            modelCur.insertRow(modelCur.getRowCount(), new Object[]{nom,prenom,email});
+            
+            modelAll.removeRow(rowselect);
+        }
+    }//GEN-LAST:event_btn_getPatientMouseClicked
+
+    private void fillComponents() throws ClassNotFoundException, SQLException{
+        // establish the connection
+        Conn_dbs connex = new Conn_dbs(); 
+        
+        modelCur = (DefaultTableModel)table_curPatients.getModel();
+        modelAll = (DefaultTableModel)table_allPatients.getModel();
+        
+        String nom,prenom,email;
+        String getPatients = "SELECT * FROM [Quick Patient] ORDER BY nom;";            
+
+        ResultSet rs = connex.getStatement().executeQuery(getPatients);
+        while(rs.next()){
+            email = rs.getString("email");
+            nom= rs.getString("nom");
+            prenom= rs.getString("prenom");
+            modelAll.insertRow(modelAll.getRowCount(), new Object[]{nom,prenom,email});
+        }       
+    }
+    
+    private void btn_addRDVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addRDVMouseClicked
+        // establish the connection
+        Conn_dbs connex = new Conn_dbs(); 
+        SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        
+        try {
+            
+            
+            Date day = ymdFormat.parse(inDate.getText());
+            Date time = timeFormat.parse(inHoraire.getText());
+            String reglement= String.valueOf(cbox_reglement.getSelectedItem());
+            String anxiete= String.valueOf(cbox_anxiete.getSelectedItem());
+            String prix= String.valueOf(txtF_prix.getText());
+            
+            String horaire= ydmFormat.format(day)+" "+timeFormat.format(time);
+            String anxieteNull = ", anxiete";
+            
+            
+            if("-".equals(anxiete)){
+                anxiete = "";
+                anxieteNull = "";
+            } else {
+                anxiete = ", '"+anxiete + "'";
+            }
+            
+            
+            
+            
+            if(Double.parseDouble(prix)<0)
+            {
+                lbl_error.setText("Incorrect Prioe!");
+            } else {
+                Statement stmt = connex.getStatement();
+                
+                String addRdv = "INSERT INTO Consultations (horaire, prix, reglement"+ anxieteNull +")" + 
+                        "VALUES ('"+horaire+"', "+prix+", '"+reglement+"'"+anxiete+");";
+                if(stmt.executeUpdate(addRdv)==0)
+                {
+                    throw new SQLException("No data update!");
+                } else {
+                    String consID, emailID;
+                    String getID= "SELECT consultationid FROM Consultations WHERE horaire = '" + horaire + "';";
+                    ResultSet rs= stmt.executeQuery(getID);
+                    rs.next();
+                    consID = rs.getString("consultationid");
+                    
+                    for(int i=0; i< modelCur.getRowCount() ; i++)
+                    {
+                        emailID=(String) modelCur.getValueAt(i, modelCur.findColumn("Mail"));
+                        
+                        String addRelation= "INSERT INTO Rendez_Vous (consultationid, email) VALUES ("+consID+",'"+emailID+"');";
+                        
+                        stmt.executeUpdate(addRelation);
+                    }
+                }
+                
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            lbl_error.setText("Values are too long or date isn't possible!");
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException e){
+            lbl_error.setText("price is an incorrectValue");
+        } catch (ParseException ex) {
+            lbl_error.setText("Date/price filled Incorrectly! Make sure format is correct!");
+            Logger.getLogger(New_patients.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_addRDVMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addRDV;
     private javax.swing.JButton btn_exit;
-    private javax.swing.JComboBox<String> comboBox_anxiete;
-    private javax.swing.JComboBox<String> comboBox_horaire;
-    private javax.swing.JComboBox<String> comboBox_p1;
-    private javax.swing.JComboBox<String> comboBox_p2;
-    private javax.swing.JComboBox<String> comboBox_rdvType;
-    private javax.swing.JComboBox<String> comboBox_reglement;
+    private javax.swing.JButton btn_getPatient;
+    private javax.swing.JComboBox<String> cbox_anxiete;
+    private javax.swing.JComboBox<String> cbox_reglement;
+    private javax.swing.JTextField inDate;
+    private javax.swing.JTextField inHoraire;
     private javax.swing.JLabel lbl_anxiete;
+    private javax.swing.JLabel lbl_date;
+    private javax.swing.JLabel lbl_error;
     private javax.swing.JLabel lbl_horaire;
     private javax.swing.JLabel lbl_patient;
+    private javax.swing.JLabel lbl_patient1;
     private javax.swing.JLabel lbl_prix;
-    private javax.swing.JLabel lbl_rdvType;
     private javax.swing.JLabel lbl_reglement;
+    private javax.swing.JScrollPane tab_rdvDuJour;
+    private javax.swing.JScrollPane tab_rdvDuJour1;
+    private javax.swing.JTable table_allPatients;
+    private javax.swing.JTable table_curPatients;
     private javax.swing.JTextField txtF_prix;
     // End of variables declaration//GEN-END:variables
 }

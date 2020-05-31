@@ -42,7 +42,7 @@ DROP TABLE  IF EXISTS Compte_Patient;
 CREATE TABLE Consultations(
         consultationid Int NOT NULL IDENTITY,
         horaire        Datetime NOT NULL ,
-        typerdv        Varchar (6) NOT NULL ,
+        typerdv        Varchar (6) ,
         prix           Decimal (5,2) NOT NULL ,
         reglement      Varchar (20) ,
         anxiete        Int

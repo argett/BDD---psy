@@ -198,8 +198,13 @@ public class Psy_home extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitMouseClicked
 
     private void btn_addConsultationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addConsultationMouseClicked
-        New_consultation nc = new New_consultation();
-        nc.setVisible(true);
+        try {
+            New_consultation nc = new New_consultation();
+            nc.setVisible(true);
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }//GEN-LAST:event_btn_addConsultationMouseClicked
 
     /**

@@ -166,7 +166,7 @@ public class Liste_patients extends javax.swing.JFrame {
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
             String nom,prenom,email;
-            String getPatients = "SELECT email,nom,prenom FROM Patients";            
+            String getPatients = "SELECT * FROM [Quick Patient] ORDER BY nom;";            
 
             ResultSet rs = connex.getStatement().executeQuery(getPatients);
             while(rs.next()){
@@ -205,7 +205,7 @@ public class Liste_patients extends javax.swing.JFrame {
             String nom, prenom, email;
             String patient = txtF_recherche.getText();
             Conn_dbs connex = new Conn_dbs();
-            String myQuery = "SELECT email, nom, prenom FROM Patients WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%'";
+            String myQuery = "SELECT * FROM [Quick Patient] WHERE nom LIKE '%" + patient + "%' OR prenom LIKE '%" + patient + "%' ORDER BY nom";
             ResultSet rs = connex.getStatement().executeQuery(myQuery);            
             
             // dont forget to erase the table before make the update
