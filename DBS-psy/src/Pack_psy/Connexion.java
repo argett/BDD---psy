@@ -43,6 +43,7 @@ public class Connexion extends javax.swing.JFrame {
         insert_pseudo = new javax.swing.JTextField();
         insert_mdp = new javax.swing.JTextField();
         btn_exit = new javax.swing.JButton();
+        lbl_error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +74,8 @@ public class Connexion extends javax.swing.JFrame {
             }
         });
 
+        lbl_error.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,6 +89,9 @@ public class Connexion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(btn_inscrire, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(92, 92, 92)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_pseudo)
@@ -93,13 +99,14 @@ public class Connexion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(insert_pseudo)
-                            .addComponent(insert_mdp, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(172, 172, 172)
-                        .addComponent(btn_inscrire, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(insert_mdp, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_connecter, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +123,9 @@ public class Connexion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_mdp)
                     .addComponent(insert_mdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_error)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_inscrire)
                     .addComponent(btn_connecter))
@@ -131,23 +140,38 @@ public class Connexion extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitMouseClicked
 
     private void btn_connecterMouseClicked(MouseEvent evt) {
-      boolean connected = true;
-      if (connected) {
-        session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
-        Psy_home home;
-        try {
-            home = new Psy_home(session);
-            home.setVisible(true);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.dispose();
-      }
-
-      this.insert_pseudo.setText("test1");
-      this.insert_mdp.setText("test2");
+         try {
+             boolean connected = false;
+             Conn_dbs connex = new Conn_dbs();
+             String psy = "SELECT psyid FROM Compte_Psy WHERE psyid = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
+             String client = "SELECT patientid FROM Patients WHERE email = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
+             ResultSet infoPsy = connex.getStatement().executeQuery(psy);
+             ResultSet infoClient = connex.getStatement().executeQuery(client);
+             System.out.println(infoPsy.getFetchSize());
+             
+             while(infoPsy.next()){
+                 connected = true;
+             }
+             while(infoClient.next()){
+                 connected = true;
+             }
+             
+             if (connected) {
+                 session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
+                 Psy_home home;
+                 try {
+                     home = new Psy_home(session);
+                     home.setVisible(true);
+                 } catch (ClassNotFoundException | SQLException ex) {
+                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+                 this.dispose();
+             }else {
+                 lbl_error.setText("Le pseudo ou le mot de passe est faux ou ne correspondent pas");
+             }
+         } catch (SQLException ex) {
+             Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+         }
    }
 
    private void btn_inscrireMouseClicked(MouseEvent evt) {
@@ -184,6 +208,7 @@ public class Connexion extends javax.swing.JFrame {
     private javax.swing.JTextField insert_mdp;
     private javax.swing.JTextField insert_pseudo;
     private javax.swing.JLabel lbl_connexion;
+    private javax.swing.JLabel lbl_error;
     private javax.swing.JLabel lbl_mdp;
     private javax.swing.JLabel lbl_pseudo;
     // End of variables declaration//GEN-END:variables

@@ -66,16 +66,15 @@ CREATE TABLE Professions(
 
 CREATE TABLE Patients(
         patientid     Int NOT NULL IDENTITY,
+		email         Varchar (80) NOT NULL ,
+		mdp			  Varchar (20) NOT NULL ,
         nom           Varchar (20) NOT NULL ,
         prenom        Varchar (20) NOT NULL ,
-		email         Varchar (80) NOT NULL ,
         datenaissance Date NOT NULL ,
         sexe          Char (1) NOT NULL ,
-        mdp           Varchar (30) NOT NULL,
         connupar      Varchar (50) NOT NULL ,
         profession    Varchar (30)
 	,CONSTRAINT Patients_PK PRIMARY KEY (patientid)
-
 	,CONSTRAINT Patients_Professions_FK FOREIGN KEY (profession) REFERENCES Professions(profession)
 );
 
@@ -187,14 +186,4 @@ CREATE TABLE Compte_Psy(
         psyid        Varchar (15) NOT NULL ,
         mdp          Varchar (30) NOT NULL
 	,CONSTRAINT Compte_Psy_PK PRIMARY KEY (psyid)
-);
-
-
-/*------------------------------------------------------------
-# Table: Compte Patient
-------------------------------------------------------------*/
-
-CREATE TABLE Compte_Patient(
-    patientid INT PRIMARY KEY NOT NULL,
-    mdp VARCHAR(255) NOT NULL
 );

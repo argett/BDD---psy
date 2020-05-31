@@ -26,9 +26,3 @@ VALUES (1,1), (2,2), (3,3), (3,4);
 
 INSERT INTO Notes_Postures (posture, consultationid)
 VALUES ('Relax',1), ('Relax',2), ('Tendu',3);
-
-INSERT INTO Compte_Psy(psyid, mdp)
-VALUES (1,'1234'),(2,'abcd'),(3,'azer');
-
-INSERT INTO Compte_Patient(patientid, mdp)
-VALUES (1,'test'),(2,'qwer'),(3,'pasadmin');
