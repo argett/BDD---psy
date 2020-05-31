@@ -38,59 +38,45 @@
                           <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="lbl_dateNaissance" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="lbl_nom" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_nom" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_prenom" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_email" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_dateNaissance" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_Sexe" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_decouverte" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="lbl_psyCo" min="-2" pref="193" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
+                                      <Component id="lbl_inSexe" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbl_patientID" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_prenom" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_email" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_Sexe" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_decouverte" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_anterieure" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_oldProfession" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="lbl_inID" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="173" max="32767" attributes="0"/>
-                                      <Component id="lbl_psyCo" min="-2" pref="193" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btn_ajouterProf" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                                          <Component id="inProfession" min="-2" pref="94" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lbl_inPrenom" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_inNom" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_inDateNaissance" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_inSexe" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_inEmail" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_inDecouverte" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl_ProfActuelle" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                              <Component id="lbl_inProfActuelle" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lbl_anterieure" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lbl_oldProfession" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="btn_ajouterProf" max="32767" attributes="0"/>
-                                                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                                                  <Component id="inProfession" min="-2" pref="94" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
+                                      <EmptySpace pref="87" max="32767" attributes="0"/>
+                                      <Component id="lbl_ProfActuelle" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      <Component id="lbl_inProfActuelle" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -109,45 +95,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_patientID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_nom" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inNom" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_prenom" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inPrenom" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbl_email" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbl_dateNaissance" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbl_inEmail" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbl_inDateNaissance" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_Sexe" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inSexe" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_decouverte" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inDecouverte" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="lbl_rdvPasse" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
@@ -161,20 +109,44 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_ProfActuelle" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_inProfActuelle" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_nom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_inNom" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_oldProfession" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="inProfession" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_prenom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_inPrenom" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btn_ajouterProf" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_anterieure" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btn_ajouterProf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_email" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_inEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_dateNaissance" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_inDateNaissance" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lbl_anterieure" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_Sexe" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_inSexe" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lbl_decouverte" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_inDecouverte" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Component id="jScrollPane2" min="-2" pref="149" max="-2" attributes="0"/>
@@ -229,16 +201,6 @@
     <Component class="javax.swing.JLabel" name="lbl_inPrenom">
       <Properties>
         <Property name="text" type="java.lang.String" value="inPrenom"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_patientID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Patient ID :"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_inID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="inID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_inDateNaissance">

@@ -18,11 +18,11 @@ VALUES ('Smith', 'John', 'John.smith@fakemail.com', '2000-01-01','M','1234','Pub
        ('Doe','Jane','Jdoe@fakemail.com','1992-05-05','F','0000','Ami(e)','Ecrivaine'),
        ('Doe','William','Williwonder@fakemail.com','1992-06-06','M','Fido33','Ami(e)','Chanteur');
 
-INSERT INTO Anterieure (patientid, profession)
-VALUES (1,'Cuisinier'),(3,'Danseur'),(3,'Cuisinier');
+INSERT INTO Anterieure (email, profession)
+VALUES ('John.smith@fakemail.com','Cuisinier'),('Jdoe@fakemail.com','Danseur'),('Jdoe@fakemail.com','Cuisinier');
 
-INSERT INTO Rendez_Vous (consultationid, patientid)
-VALUES (1,1), (2,2), (3,3), (3,4);
+INSERT INTO Rendez_Vous (consultationid, email)
+VALUES (1,'John.smith@fakemail.com'), (2,'JustineTime@fakemail.com'), (3,'Jdoe@fakemail.com'), (3,'Williwonder@fakemail.com');
 
 INSERT INTO Notes_Postures (posture, consultationid)
 VALUES ('Relax',1), ('Relax',2), ('Tendu',3);

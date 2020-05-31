@@ -65,7 +65,6 @@ CREATE TABLE Professions(
 ------------------------------------------------------------*/
 
 CREATE TABLE Patients(
-        patientid     Int NOT NULL IDENTITY,
 		email         Varchar (80) NOT NULL ,
 		mdp			  Varchar (20) NOT NULL ,
         nom           Varchar (20) NOT NULL ,
@@ -74,7 +73,7 @@ CREATE TABLE Patients(
         sexe          Char (1) NOT NULL ,
         connupar      Varchar (50) NOT NULL ,
         profession    Varchar (30)
-	,CONSTRAINT Patients_PK PRIMARY KEY (patientid)
+	,CONSTRAINT Patients_PK PRIMARY KEY (email)
 	,CONSTRAINT Patients_Professions_FK FOREIGN KEY (profession) REFERENCES Professions(profession)
 );
 
@@ -115,11 +114,11 @@ CREATE TABLE Comportements(
 
 CREATE TABLE Rendez_Vous(
         consultationid Int NOT NULL ,
-        patientid      Int NOT NULL
-	,CONSTRAINT Rendez_Vous_PK PRIMARY KEY (consultationid,patientid)
+        email      	   Varchar (80) NOT NULL
+	,CONSTRAINT Rendez_Vous_PK PRIMARY KEY (consultationid,email)
 
 	,CONSTRAINT Rendez_Vous_Consultations_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
-	,CONSTRAINT Rendez_Vous_Patients0_FK FOREIGN KEY (patientid) REFERENCES Patients(patientid)
+	,CONSTRAINT Rendez_Vous_Patients0_FK FOREIGN KEY (email) REFERENCES Patients(email)
 );
 
 
@@ -128,11 +127,11 @@ CREATE TABLE Rendez_Vous(
 ------------------------------------------------------------*/
 
 CREATE TABLE Anterieure(
-        patientid  Int NOT NULL ,
+        email      Varchar (80) NOT NULL ,
         profession Varchar (30) NOT NULL
-	,CONSTRAINT Anterieure_PK PRIMARY KEY (patientid,profession)
+	,CONSTRAINT Anterieure_PK PRIMARY KEY (email,profession)
 
-	,CONSTRAINT Anterieure_Patients_FK FOREIGN KEY (patientid) REFERENCES Patients(patientid)
+	,CONSTRAINT Anterieure_Patients_FK FOREIGN KEY (email) REFERENCES Patients(email)
 	,CONSTRAINT Anterieure_Professions0_FK FOREIGN KEY (profession) REFERENCES Professions(profession)
 );
 

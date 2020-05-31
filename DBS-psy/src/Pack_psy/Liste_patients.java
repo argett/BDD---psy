@@ -54,7 +54,7 @@ public class Liste_patients extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mail", "Nom", "Prénom"
+                "Nom", "Prénom", "Mail"
             }
         ) {
             Class[] types = new Class [] {

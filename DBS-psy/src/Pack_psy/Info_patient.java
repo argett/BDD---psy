@@ -18,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
 public class Info_patient extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;
-    int pid;
+    String inMail;
 
-    public Info_patient(Session psy, String inMail) throws ClassNotFoundException, SQLException{
+    public Info_patient(Session psy, String pEmail) throws ClassNotFoundException, SQLException{
         this.psycho = psy;
         this.initComponents();
         this.lbl_psyCo.setText(psycho.getInfos());
-        fillComponents(inMail);
+        
+        inMail = pEmail;
+        fillComponents();
     }
 
 
@@ -45,8 +47,6 @@ public class Info_patient extends javax.swing.JFrame {
         lbl_decouverte = new javax.swing.JLabel();
         lbl_inNom = new javax.swing.JLabel();
         lbl_inPrenom = new javax.swing.JLabel();
-        lbl_patientID = new javax.swing.JLabel();
-        lbl_inID = new javax.swing.JLabel();
         lbl_inDateNaissance = new javax.swing.JLabel();
         lbl_Sexe = new javax.swing.JLabel();
         lbl_inSexe = new javax.swing.JLabel();
@@ -90,10 +90,6 @@ public class Info_patient extends javax.swing.JFrame {
         lbl_inNom.setText("inNom");
 
         lbl_inPrenom.setText("inPrenom");
-
-        lbl_patientID.setText("Patient ID :");
-
-        lbl_inID.setText("inID");
 
         lbl_inDateNaissance.setText("inDateNaissance");
 
@@ -235,47 +231,39 @@ public class Info_patient extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(lbl_dateNaissance)
-                                            .addGap(40, 40, 40))
-                                        .addComponent(lbl_nom))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_patientID)
-                                            .addComponent(lbl_prenom)
-                                            .addComponent(lbl_email)
-                                            .addComponent(lbl_Sexe)
-                                            .addComponent(lbl_decouverte, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addComponent(lbl_nom)
+                                    .addComponent(lbl_prenom)
+                                    .addComponent(lbl_email)
+                                    .addComponent(lbl_dateNaissance)
+                                    .addComponent(lbl_Sexe)
+                                    .addComponent(lbl_decouverte))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbl_inID)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbl_inSexe)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbl_anterieure)
+                                            .addComponent(lbl_oldProfession))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btn_ajouterProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                            .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lbl_inPrenom)
                                             .addComponent(lbl_inNom)
                                             .addComponent(lbl_inDateNaissance)
-                                            .addComponent(lbl_inSexe)
                                             .addComponent(lbl_inEmail)
                                             .addComponent(lbl_inDecouverte))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lbl_ProfActuelle)
-                                                .addGap(31, 31, 31)
-                                                .addComponent(lbl_inProfActuelle))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lbl_anterieure)
-                                                    .addComponent(lbl_oldProfession))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(btn_ajouterProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                                    .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                                        .addComponent(lbl_ProfActuelle)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(lbl_inProfActuelle))))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_quit)
@@ -286,37 +274,7 @@ public class Info_patient extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(34, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_patientID)
-                            .addComponent(lbl_inID))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_nom)
-                            .addComponent(lbl_inNom))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_prenom, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbl_inPrenom))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_email)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_dateNaissance))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_inEmail)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_inDateNaissance)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_Sexe)
-                            .addComponent(lbl_inSexe))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_decouverte)
-                            .addComponent(lbl_inDecouverte))
-                        .addGap(51, 51, 51)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbl_rdvPasse)
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
@@ -327,18 +285,37 @@ public class Info_patient extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_ProfActuelle)
-                            .addComponent(lbl_inProfActuelle))
+                            .addComponent(lbl_inProfActuelle)
+                            .addComponent(lbl_nom)
+                            .addComponent(lbl_inNom))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_oldProfession)
-                            .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_prenom)
+                            .addComponent(lbl_inPrenom))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_ajouterProf)
-                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_ajouterProf)
+                            .addComponent(lbl_email)
+                            .addComponent(lbl_inEmail))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_dateNaissance)
+                            .addComponent(lbl_inDateNaissance))
+                        .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_anterieure)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_anterieure)
+                                    .addComponent(lbl_Sexe)
+                                    .addComponent(lbl_inSexe))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_decouverte)
+                                    .addComponent(lbl_inDecouverte))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_rdvFutur)
@@ -358,7 +335,7 @@ public class Info_patient extends javax.swing.JFrame {
         {
             try{
                 Statement stmt = connex.getStatement();
-                String archiveProf = "INSERT INTO Anterieure (patientid, profession) VALUES ("+pid+",'"+oldProf+"')";
+                String archiveProf = "INSERT INTO Anterieure (patientid, profession) VALUES ("+inMail+",'"+oldProf+"')";
                 
                 ResultSet rs = stmt.executeQuery("SELECT * FROM Professions WHERE profession = '" + oldProf + "';");
                 if(!rs.next())
@@ -376,7 +353,7 @@ public class Info_patient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ajouterProfMouseClicked
 
-private void fillComponents(String inMail) throws ClassNotFoundException, SQLException{
+private void fillComponents() throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
         SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
@@ -389,13 +366,12 @@ private void fillComponents(String inMail) throws ClassNotFoundException, SQLExc
             lbl_inNom.setText(rs.getString("nom"));
             lbl_inPrenom.setText(rs.getString("prenom"));
             lbl_inEmail.setText(rs.getString("email"));
-            lbl_inID.setText(rs.getString("patientid"));
             lbl_inDateNaissance.setText(rs.getString("datenaissance"));
             lbl_inSexe.setText(rs.getString("sexe"));
             lbl_inProfActuelle.setText(rs.getString("profession"));
             lbl_inDecouverte.setText(rs.getString("connupar"));
             
-            String getAnterieures = "SELECT profession FROM Anterieure WHERE email = '" + inMail + ";";
+            String getAnterieures = "SELECT profession FROM Anterieure WHERE email = '" + inMail + "';";
             
             rs = connex.getStatement().executeQuery(getAnterieures);
             
@@ -406,10 +382,9 @@ private void fillComponents(String inMail) throws ClassNotFoundException, SQLExc
             
             long millis=System.currentTimeMillis();  
             java.sql.Timestamp date= new java.sql.Timestamp(millis);
-            /*
-            //TODO replace this with a view
+            
             String getRDVPasse= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
-                    + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time< '" + ydmFormat.format(date)
+                    + "WHERE email = '"+ inMail +"' AND exact_time< '" + ydmFormat.format(date)
                     + "' ORDER BY exact_time;";
             rs = connex.getStatement().executeQuery(getRDVPasse);
             
@@ -419,16 +394,14 @@ private void fillComponents(String inMail) throws ClassNotFoundException, SQLExc
             }
             
             String getRDVFutur= "SELECT date, horaire, type, anxiete FROM [Quick RDV]"
-                    + "WHERE pid = "+ Integer.toString(pid) +" AND exact_time> '" + ydmFormat.format(date)
+                    + "WHERE email = '"+ inMail +"' AND exact_time> '" + ydmFormat.format(date)
                     + "' ORDER BY exact_time;";
             rs = connex.getStatement().executeQuery(getRDVFutur);
 
             model = (DefaultTableModel)table_rdvFutur.getModel();
             while(rs.next()){
                 model.insertRow(model.getRowCount(), new Object[]{rs.getString("date"),rs.getString("horaire"),rs.getString("type"),rs.getString("anxiete")});
-            }
-            */
-            
+            }  
         } catch (SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -455,14 +428,12 @@ private void fillComponents(String inMail) throws ClassNotFoundException, SQLExc
     private javax.swing.JLabel lbl_inDateNaissance;
     private javax.swing.JLabel lbl_inDecouverte;
     private javax.swing.JLabel lbl_inEmail;
-    private javax.swing.JLabel lbl_inID;
     private javax.swing.JLabel lbl_inNom;
     private javax.swing.JLabel lbl_inPrenom;
     private javax.swing.JLabel lbl_inProfActuelle;
     private javax.swing.JLabel lbl_inSexe;
     private javax.swing.JLabel lbl_nom;
     private javax.swing.JLabel lbl_oldProfession;
-    private javax.swing.JLabel lbl_patientID;
     private javax.swing.JLabel lbl_prenom;
     private javax.swing.JLabel lbl_psyCo;
     private javax.swing.JLabel lbl_rdvFutur;
