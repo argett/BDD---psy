@@ -140,38 +140,44 @@ public class Connexion extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitMouseClicked
 
     private void btn_connecterMouseClicked(MouseEvent evt) {
-         try {
-             boolean connected = false;
-             Conn_dbs connex = new Conn_dbs();
-             String psy = "SELECT psyid FROM Compte_Psy WHERE psyid = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
-             String client = "SELECT patientid FROM Patients WHERE email = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
-             ResultSet infoPsy = connex.getStatement().executeQuery(psy);
-             ResultSet infoClient = connex.getStatement().executeQuery(client);
-             System.out.println(infoPsy.getFetchSize());
-             
-             while(infoPsy.next()){
-                 connected = true;
-             }
-             while(infoClient.next()){
-                 connected = true;
-             }
-             
-             if (connected) {
-                 session = new Session(0, "conn.connect(BDD).getName(psi.get(id)) : connectÃ©");
-                 Psy_home home;
-                 try {
-                     home = new Psy_home(session);
-                     home.setVisible(true);
-                 } catch (ClassNotFoundException | SQLException ex) {
-                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                 this.dispose();
-             }else {
-                 lbl_error.setText("Le pseudo ou le mot de passe est faux ou ne correspondent pas");
-             }
-         } catch (SQLException ex) {
-             Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            boolean connected = false;
+            Conn_dbs connex = new Conn_dbs();
+            String psy = "SELECT psyid FROM Compte_Psy WHERE psyid = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
+            String client = "SELECT patientid FROM Patients WHERE email = '"+ insert_pseudo.getText() +"' AND mdp = '"+ insert_mdp.getText() +"'";
+            ResultSet infoPsy = connex.getStatement().executeQuery(psy);
+            ResultSet infoPatient = connex.getStatement().executeQuery(client);
+
+            while(infoPsy.next()){
+                session = new Session(-1, "Psychologue");
+                Psy_home home;
+                try {
+                    home = new Psy_home(session);
+                    home.setVisible(true);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                this.dispose();
+                return;
+            }
+
+            while(infoPatient.next()){
+                session = new Session(Integer.valueOf(infoPatient.getString(1)), "Psychologue");
+                Info_patient pat;
+                try {
+                    pat = new Info_patient(session, Integer.valueOf(infoPatient.getString(1)));
+                    pat.setVisible(true);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                this.dispose();
+            }
+
+            lbl_error.setText("Le pseudo ou le mot de passe est faux ou ne correspondent pas");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
    }
 
    private void btn_inscrireMouseClicked(MouseEvent evt) {

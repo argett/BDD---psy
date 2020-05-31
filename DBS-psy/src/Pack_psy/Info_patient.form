@@ -120,9 +120,9 @@
                           <Component id="lbl_inNom" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbl_prenom" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_inPrenom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_inPrenom" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">

@@ -5,19 +5,17 @@
  */
 package Pack_psy;
 
-import java.sql.Connection;
-
 /**
  *
  * @author lilian
  */
 public class Session {
+   private String type; // patient or psy
    private int id;
-   private String psychologue;
 
-    Session(int i, String n) {
+    Session(int i, String t) {
       this.id = i;
-      this.psychologue = n;
+      this.type = t;
     }
    
     public int getId() {
@@ -25,7 +23,7 @@ public class Session {
     }
 
     public String getPsychologue() {
-        return psychologue;
+        return "en atente, WIP";
     }
    
    

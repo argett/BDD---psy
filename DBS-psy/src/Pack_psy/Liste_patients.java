@@ -192,7 +192,7 @@ public class Liste_patients extends javax.swing.JFrame {
         id = (int) model.getValueAt(row, model.findColumn("ID"));
         
         try {
-            Info_patients pf = new Info_patients(psycho, id);
+            Info_patient pf = new Info_patient(psycho, id);
             pf.setVisible(true);
         } catch (ClassNotFoundException | SQLException e){
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);

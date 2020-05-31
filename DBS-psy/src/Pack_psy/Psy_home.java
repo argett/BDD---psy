@@ -301,7 +301,7 @@ public class Psy_home extends javax.swing.JFrame {
     private void table_calendrierMouseClicked(MouseEvent evt) {
         int ID = updateCalendar();
         try { 
-            Info_patients pf = new Info_patients(psycho, ID);
+            Info_patient pf = new Info_patient(psycho, ID);
             pf.setVisible(true);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);

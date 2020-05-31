@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Info_patients extends javax.swing.JFrame {
+public class Info_patient extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;
     int pid;
 
-    public Info_patients(Session psy, int inPid) throws ClassNotFoundException, SQLException{
+    public Info_patient(Session psy, int inPid) throws ClassNotFoundException, SQLException{
         this.psycho = psy;
         this.initComponents();
         this.lbl_psyCo.setText(this.psycho.getPsychologue());
@@ -297,8 +297,8 @@ public class Info_patients extends javax.swing.JFrame {
                             .addComponent(lbl_nom)
                             .addComponent(lbl_inNom))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_prenom)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_prenom, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbl_inPrenom))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
