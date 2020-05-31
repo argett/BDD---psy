@@ -33,6 +33,7 @@ DROP TABLE  IF EXISTS Notes_Comportements;
 DROP TABLE  IF EXISTS Notes_Mots;
 DROP TABLE  IF EXISTS Notes_Postures;
 DROP TABLE  IF EXISTS Compte_Psy;
+DROP TABLE  IF EXISTS Compte_Patient;
 
 /*------------------------------------------------------------
 # Table: Consultations
@@ -186,4 +187,14 @@ CREATE TABLE Compte_Psy(
         psyid        Varchar (15) NOT NULL ,
         mdp          Varchar (30) NOT NULL
 	,CONSTRAINT Compte_Psy_PK PRIMARY KEY (psyid)
+);
+
+
+/*------------------------------------------------------------
+# Table: Compte Patient
+------------------------------------------------------------*/
+
+CREATE TABLE Compte_Patient(
+    patientid INT PRIMARY KEY NOT NULL,
+    mdp VARCHAR(255) NOT NULL
 );
