@@ -57,6 +57,8 @@ public class New_patients extends javax.swing.JFrame {
         lbl_mdp = new javax.swing.JLabel();
         inMdp = new javax.swing.JTextField();
         lbl_error = new javax.swing.JLabel();
+        lbl_Email = new javax.swing.JLabel();
+        inEmail = new javax.swing.JTextField();
 
         grp_sexe.add(inHomme); grp_sexe.add(inFemme);
 
@@ -136,11 +138,15 @@ public class New_patients extends javax.swing.JFrame {
 
         lbl_error.setForeground(new java.awt.Color(150, 0, 0));
 
+        lbl_Email.setText("E-mail :");
+
+        inEmail.setText("email@example.com");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -162,7 +168,8 @@ public class New_patients extends javax.swing.JFrame {
                             .addComponent(lbl_prenom)
                             .addComponent(lbl_dateNaissance)
                             .addComponent(lbl_Sexe)
-                            .addComponent(lbl_nom))
+                            .addComponent(lbl_nom)
+                            .addComponent(lbl_Email))
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -173,7 +180,8 @@ public class New_patients extends javax.swing.JFrame {
                             .addComponent(inPrenom, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(inDob)
                             .addComponent(inHomme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inNom))))
+                            .addComponent(inNom)
+                            .addComponent(inEmail))))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -191,7 +199,11 @@ public class New_patients extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_prenom)
                     .addComponent(inPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_Email)
+                    .addComponent(inEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_dateNaissance)
                     .addComponent(inDob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,7 +225,7 @@ public class New_patients extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_ProfActuelle)
                     .addComponent(inProfession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Ajouter)
                     .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,11 +254,12 @@ public class New_patients extends javax.swing.JFrame {
     private void btn_AjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_AjouterMouseClicked
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
-        SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat ydmFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         try {
             String nom = inNom.getText();
             String prenom= inPrenom.getText();
+            String email= inEmail.getText();
             Date dob = ydmFormat.parse(inDob.getText());
             String mdp= inMdp.getText();
             String decouverte= String.valueOf(inDecouverte.getSelectedItem());
@@ -272,9 +285,8 @@ public class New_patients extends javax.swing.JFrame {
                 }
                 
                 String sexe = femme ? "F" : "H";
-                String insertPatient = "INSERT INTO Patients (nom, prenom, datenaissance, sexe, mdp, connupar"+profExists+")" + 
-                        "VALUES ('"+nom+"', '"+prenom+"', '"+ydmFormat.format(dob)+"','"+sexe+"','"+mdp+"','"+decouverte+"'"+profession+");";
-                stmt.executeUpdate(insertPatient);
+                String insertPatient = "INSERT INTO Patients (nom, prenom, email, datenaissance, sexe, mdp, connupar"+profExists+")" + 
+                        "VALUES ('"+nom+"', '"+prenom+"', '"+email+"',  '"+ydmFormat.format(dob)+"','"+sexe+"','"+mdp+"','"+decouverte+"'"+profession+");";
                 if(stmt.executeUpdate(insertPatient)==0)
                 {
                     throw new SQLException("No data update!");
@@ -307,12 +319,14 @@ public class New_patients extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grp_sexe;
     private javax.swing.JComboBox<String> inDecouverte;
     private javax.swing.JTextField inDob;
+    private javax.swing.JTextField inEmail;
     private javax.swing.JRadioButton inFemme;
     private javax.swing.JRadioButton inHomme;
     private javax.swing.JTextField inMdp;
     private javax.swing.JTextField inNom;
     private javax.swing.JTextField inPrenom;
     private javax.swing.JTextField inProfession;
+    private javax.swing.JLabel lbl_Email;
     private javax.swing.JLabel lbl_ProfActuelle;
     private javax.swing.JLabel lbl_Sexe;
     private javax.swing.JLabel lbl_dateNaissance;
