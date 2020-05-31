@@ -1,5 +1,5 @@
 ALTER TABLE Patients
-    DROP CONSTRAINT IF EXISTS "Patients_Proffessions_FK";
+    DROP CONSTRAINT IF EXISTS "Patients_Professions_FK";
 ALTER TABLE Rendez_Vous
     DROP CONSTRAINT IF EXISTS "Rendez_Vous_Consultations_FK";
 ALTER TABLE Rendez_Vous
@@ -7,7 +7,7 @@ ALTER TABLE Rendez_Vous
 ALTER TABLE Anterieure
     DROP CONSTRAINT IF EXISTS "Anterieure_Patients_FK";
 ALTER TABLE Anterieure
-    DROP CONSTRAINT IF EXISTS "Anterieure_Proffessions0_FK";
+    DROP CONSTRAINT IF EXISTS "Anterieure_Professions0_FK";
 ALTER TABLE Notes_Postures
     DROP CONSTRAINT IF EXISTS "Notes_Postures_Consultations0_FK";
 ALTER TABLE Notes_Postures
@@ -22,7 +22,7 @@ ALTER TABLE Notes_Mots
     DROP CONSTRAINT IF EXISTS "Notes_Mots_Consultations0_FK";
 
 DROP TABLE  IF EXISTS Consultations;
-DROP TABLE  IF EXISTS Proffessions;
+DROP TABLE  IF EXISTS Professions;
 DROP TABLE  IF EXISTS Patients;
 DROP TABLE  IF EXISTS MotCles;
 DROP TABLE  IF EXISTS Postures;
@@ -39,7 +39,7 @@ DROP TABLE  IF EXISTS Compte_Psy;
 ------------------------------------------------------------*/
 
 CREATE TABLE Consultations(
-        consultationid Int NOT NULL ,
+        consultationid Int NOT NULL IDENTITY,
         horaire        Datetime NOT NULL ,
         typerdv        Varchar (6) NOT NULL ,
         prix           Decimal (5,2) NOT NULL ,
@@ -50,12 +50,12 @@ CREATE TABLE Consultations(
 
 
 /*------------------------------------------------------------
-# Table: Proffessions
+# Table: Professions
 ------------------------------------------------------------*/
 
-CREATE TABLE Proffessions(
+CREATE TABLE Professions(
         profession Varchar (30) NOT NULL
-	,CONSTRAINT Proffessions_PK PRIMARY KEY (profession)
+	,CONSTRAINT Professions_PK PRIMARY KEY (profession)
 );
 
 
@@ -64,7 +64,7 @@ CREATE TABLE Proffessions(
 ------------------------------------------------------------*/
 
 CREATE TABLE Patients(
-        patientid     Int NOT NULL ,
+        patientid     Int NOT NULL IDENTITY,
         nom           Varchar (20) NOT NULL ,
         prenom        Varchar (20) NOT NULL ,
         datenaissance Date NOT NULL ,
@@ -74,7 +74,7 @@ CREATE TABLE Patients(
         profession    Varchar (30)
 	,CONSTRAINT Patients_PK PRIMARY KEY (patientid)
 
-	,CONSTRAINT Patients_Proffessions_FK FOREIGN KEY (profession) REFERENCES Proffessions(profession)
+	,CONSTRAINT Patients_Professions_FK FOREIGN KEY (profession) REFERENCES Professions(profession)
 );
 
 
@@ -132,7 +132,7 @@ CREATE TABLE Anterieure(
 	,CONSTRAINT Anterieure_PK PRIMARY KEY (patientid,profession)
 
 	,CONSTRAINT Anterieure_Patients_FK FOREIGN KEY (patientid) REFERENCES Patients(patientid)
-	,CONSTRAINT Anterieure_Proffessions0_FK FOREIGN KEY (profession) REFERENCES Proffessions(profession)
+	,CONSTRAINT Anterieure_Professions0_FK FOREIGN KEY (profession) REFERENCES Professions(profession)
 );
 
 

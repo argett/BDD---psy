@@ -45,6 +45,7 @@ public class Liste_patients extends javax.swing.JFrame {
         lbl_rechercher = new javax.swing.JLabel();
         txtF_recherche = new javax.swing.JTextField();
         btn_recherche = new javax.swing.JButton();
+        btn_newPatient = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,12 +102,21 @@ public class Liste_patients extends javax.swing.JFrame {
             }
         });
 
+        btn_newPatient.setText("Nouveau Patient");
+        btn_newPatient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_newPatientMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(318, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btn_newPatient)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_exit)
@@ -118,11 +128,11 @@ public class Liste_patients extends javax.swing.JFrame {
                 .addComponent(txtF_recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btn_recherche)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+                    .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -131,8 +141,9 @@ public class Liste_patients extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_exit))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
+                    .addComponent(btn_exit)
+                    .addComponent(btn_newPatient))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_rechercher, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_recherche)
@@ -142,7 +153,7 @@ public class Liste_patients extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(46, 46, 46)
                     .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(47, Short.MAX_VALUE)))
+                    .addContainerGap(64, Short.MAX_VALUE)))
         );
 
         pack();
@@ -213,6 +224,15 @@ public class Liste_patients extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_rechercheMouseClicked
 
+    private void btn_newPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_newPatientMouseClicked
+        try {
+            New_patients newPatient = new New_patients(psycho);
+            newPatient.setVisible(true);
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btn_newPatientMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -220,6 +240,7 @@ public class Liste_patients extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_exit;
+    private javax.swing.JButton btn_newPatient;
     private javax.swing.JButton btn_recherche;
     private javax.swing.JLabel lbl_psyCo;
     private javax.swing.JLabel lbl_rechercher;
