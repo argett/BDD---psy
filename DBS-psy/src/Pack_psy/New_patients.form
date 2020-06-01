@@ -33,24 +33,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_decouverte" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_ProfActuelle" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_mdp" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="inDecouverte" max="32767" attributes="0"/>
-                          <Component id="inProfession" max="32767" attributes="0"/>
-                          <Component id="inMdp" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="lbl_error" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_Ajouter" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbl_prenom" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -72,7 +54,33 @@
                           <Component id="inDob" alignment="0" max="32767" attributes="0"/>
                           <Component id="inHomme" max="32767" attributes="0"/>
                           <Component id="inNom" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inEmail" alignment="0" pref="348" max="32767" attributes="0"/>
+                          <Component id="inEmail" alignment="0" pref="299" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="276" max="-2" attributes="0"/>
+                      <Component id="lbl_error" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_Ajouter" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lbl_decouverte" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_ProfActuelle" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_mdp" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_anterieure" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="inDecouverte" max="32767" attributes="0"/>
+                          <Component id="inProfession" max="32767" attributes="0"/>
+                          <Component id="inMdp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="inAnterieure" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btn_ajouterProf" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -130,7 +138,17 @@
                   <Component id="lbl_ProfActuelle" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="inProfession" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lbl_anterieure" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="inAnterieure" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_ajouterProf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="115" max="-2" attributes="0"/>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_Ajouter" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbl_error" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
@@ -239,7 +257,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="inProfession">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Proffession"/>
+        <Property name="text" type="java.lang.String" value="Profession"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btn_Ajouter">
@@ -280,6 +298,45 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="email@example.com"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_anterieure">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Professions Anterieures: "/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="table_anterieure">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="1" rowCount="0">
+                <Column editable="false" title="Profession" type="java.lang.String"/>
+              </Table>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JTextField" name="inAnterieure">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Profession"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_ajouterProf">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_ajouterProfMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

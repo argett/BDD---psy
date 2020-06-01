@@ -203,7 +203,7 @@ public class Psy_home extends javax.swing.JFrame {
 
     private void btn_addConsultationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addConsultationMouseClicked
         try {
-            New_consultation nc = new New_consultation();
+            New_consultation nc = new New_consultation(psycho);
             nc.setVisible(true);
         } catch (ClassNotFoundException | SQLException e){
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
@@ -296,7 +296,7 @@ public class Psy_home extends javax.swing.JFrame {
     private void table_calendrierMouseClicked(MouseEvent evt) {
         try {
             String ID = updateCalendar();
-            View_consultation vf = new View_consultation(ID); 
+            View_consultation vf = new View_consultation(ID,psycho); 
             vf.setVisible(true);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);

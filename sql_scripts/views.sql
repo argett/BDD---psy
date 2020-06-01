@@ -3,7 +3,7 @@ DROP VIEW IF EXISTS [Quick Patient];
 DROP VIEW IF EXISTS [Distinct RDV];
 
 CREATE VIEW [Quick RDV] AS
-SELECT FORMAT(c.horaire, 'dddd dd MMM') AS 'Date', FORMAT(c.horaire, 'HH:mm') AS 'Horaire', c.typerdv AS 'Type', c.anxiete, rdv.email AS email, c.horaire AS 'exact_time'
+SELECT FORMAT(c.horaire, 'dddd dd MMM yy') AS 'Date', FORMAT(c.horaire, 'HH:mm') AS 'Horaire', c.typerdv AS 'Type', c.anxiete, rdv.email AS email, c.horaire AS 'exact_time'
 FROM Consultations c JOIN Rendez_Vous rdv ON c.consultationid = rdv.consultationid;
 
 CREATE VIEW [Quick Patient] AS

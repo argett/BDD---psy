@@ -24,10 +24,12 @@ import javax.swing.table.DefaultTableModel;
 public class New_consultation extends javax.swing.JFrame {
     DefaultTableModel modelCur;
     DefaultTableModel modelAll;
+    Session psycho;
     /**
      * Creates new form New_consultation
      */
-    public New_consultation() throws ClassNotFoundException, SQLException{
+    public New_consultation(Session psy) throws ClassNotFoundException, SQLException{
+        this.psycho= psy;
         initComponents();
         fillComponents();
     }
@@ -128,7 +130,11 @@ public class New_consultation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table_curPatients.setRowSelectionAllowed(false);
+        table_curPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_curPatientsMouseClicked(evt);
+            }
+        });
         tab_rdvDuJour.setViewportView(table_curPatients);
         if (table_curPatients.getColumnModel().getColumnCount() > 0) {
             table_curPatients.getColumnModel().getColumn(0).setResizable(false);
@@ -631,13 +637,28 @@ public class New_consultation extends javax.swing.JFrame {
     private void btn_addComportementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addComportementMouseClicked
         addDescription((DefaultTableModel)table_comportement.getModel(), inComportement.getText());
     }//GEN-LAST:event_btn_addComportementMouseClicked
+
+    private void table_curPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_curPatientsMouseClicked
+        int row;
+        row=table_curPatients.rowAtPoint(evt.getPoint());
+        DefaultTableModel model = (DefaultTableModel)table_curPatients.getModel();
+        
+        try {
+            Info_patient pf = new Info_patient(psycho, (String) model.getValueAt(row, model.findColumn("Mail")));
+            pf.setVisible(true);
+        } catch (ClassNotFoundException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException ex) {
+            Logger.getLogger(Liste_patients.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_table_curPatientsMouseClicked
     
     private void addDescription(DefaultTableModel model, String inStr)
     {
         ArrayList<String> existing = new ArrayList();
         for(int i=0;i<model.getRowCount();i++)
         {
-            existing.add((String) model.getValueAt(i, 1));
+            existing.add((String) model.getValueAt(i, 0));
         }
         
         if(! existing.contains(inStr) && !inStr.isEmpty() && inStr.length()<25)

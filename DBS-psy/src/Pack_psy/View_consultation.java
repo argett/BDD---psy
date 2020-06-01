@@ -24,13 +24,15 @@ import javax.swing.table.DefaultTableModel;
 public class View_consultation extends javax.swing.JFrame {
     DefaultTableModel modelCur;
     DefaultTableModel modelAll;
+    Session psycho;
     String cid;
     int initRow;
     int initMot;
     int initPos;
     int initComp;
     
-    public View_consultation(String cid) throws ClassNotFoundException, SQLException{
+    public View_consultation(String cid, Session psy) throws ClassNotFoundException, SQLException{
+        this.psycho= psy;
         this.cid = cid;
         initComponents();
         fillComponents();
@@ -135,7 +137,11 @@ public class View_consultation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table_curPatients.setRowSelectionAllowed(false);
+        table_curPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_curPatientsMouseClicked(evt);
+            }
+        });
         tab_rdvDuJour.setViewportView(table_curPatients);
         if (table_curPatients.getColumnModel().getColumnCount() > 0) {
             table_curPatients.getColumnModel().getColumn(0).setResizable(false);
@@ -392,9 +398,9 @@ public class View_consultation extends javax.swing.JFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(inPrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                            .addComponent(inHoraire)
+                                                            .addComponent(inPrix))
                                                         .addGap(26, 26, 26)))
                                                 .addGap(39, 39, 39)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -433,7 +439,6 @@ public class View_consultation extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_exit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lbl_patient1)
@@ -497,7 +502,7 @@ public class View_consultation extends javax.swing.JFrame {
                                                 .addComponent(btn_addPosture))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_addRDV)
                     .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -701,6 +706,21 @@ public class View_consultation extends javax.swing.JFrame {
     private void btn_addComportementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addComportementMouseClicked
         addDescription((DefaultTableModel)table_comportement.getModel(), inComportement.getText());
     }//GEN-LAST:event_btn_addComportementMouseClicked
+
+    private void table_curPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_curPatientsMouseClicked
+        int row;
+        row=table_curPatients.rowAtPoint(evt.getPoint());
+        DefaultTableModel model = (DefaultTableModel)table_curPatients.getModel();
+        
+        try {
+            Info_patient pf = new Info_patient(psycho, (String) model.getValueAt(row, model.findColumn("Mail")));
+            pf.setVisible(true);
+        } catch (ClassNotFoundException e){
+            Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException ex) {
+            Logger.getLogger(Liste_patients.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_table_curPatientsMouseClicked
 
     private int getDescription(DefaultTableModel model, String tableName, String name, Statement stmt) throws SQLException
     {
