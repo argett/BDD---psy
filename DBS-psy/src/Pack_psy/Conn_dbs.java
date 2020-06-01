@@ -22,7 +22,7 @@ public class Conn_dbs {
     Conn_dbs(){
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://ARGETT:1433;databaseName=projet-psy-L3DBS;integratedSecurity=true");
+            conn = DriverManager.getConnection("jdbc:CONNEXION_SERVERName=NOM_DB;integratedSecurity=true");
             
             if (conn == null) {
                System.out.println("Problem in the connection with the data base");

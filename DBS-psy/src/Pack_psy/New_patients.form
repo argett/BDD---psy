@@ -41,25 +41,29 @@
                           <Component id="lbl_nom" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_Email" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace pref="206" max="32767" attributes="0"/>
                               <Component id="lbl_psyCo" min="-2" pref="101" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_quit" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="inFemme" alignment="1" max="32767" attributes="0"/>
-                          <Component id="inPrenom" alignment="1" max="32767" attributes="0"/>
-                          <Component id="inDob" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inHomme" max="32767" attributes="0"/>
-                          <Component id="inNom" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inEmail" alignment="0" pref="330" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="46" pref="46" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="inPrenom" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="inNom" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="inEmail" alignment="0" pref="289" max="32767" attributes="0"/>
+                                  <Component id="inDob" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="inHomme" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="inFemme" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="276" max="-2" attributes="0"/>
-                      <Component id="lbl_error" max="32767" attributes="0"/>
+                      <Component id="lbl_error" pref="83" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_Ajouter" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -84,7 +88,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -121,9 +125,9 @@
                   <Component id="lbl_Sexe" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="inHomme" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Component id="inFemme" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbl_mdp" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="inMdp" alignment="3" min="-2" max="-2" attributes="0"/>

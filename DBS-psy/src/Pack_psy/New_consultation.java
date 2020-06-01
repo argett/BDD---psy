@@ -532,6 +532,7 @@ public class New_consultation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_getPatientMouseClicked
 
+    //fills all patients table
     private void fillComponents() throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
@@ -551,6 +552,7 @@ public class New_consultation extends javax.swing.JFrame {
         }       
     }
     
+    //saves all values when button is clicked
     private void btn_addRDVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addRDVMouseClicked
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
@@ -593,6 +595,7 @@ public class New_consultation extends javax.swing.JFrame {
                 {
                     throw new SQLException("No data update!");
                 } else {
+                    //only adds client relationships if rdv was succesfully created
                     String consID, emailID;
                     String getID= "SELECT consultationid FROM Consultations WHERE horaire = '" + horaire + "';";
                     ResultSet rs= stmt.executeQuery(getID);
@@ -612,7 +615,7 @@ public class New_consultation extends javax.swing.JFrame {
                     insertDescription((DefaultTableModel)table_posture.getModel(), "Postures", "posture", consID, stmt);
                     insertDescription((DefaultTableModel)table_comportement.getModel(), "Comportements", "comportement", consID, stmt);
                 }
-                
+                //only closes if values have been saved
                 this.dispose();
             }
         } catch (SQLException ex) {
@@ -638,6 +641,7 @@ public class New_consultation extends javax.swing.JFrame {
         addDescription((DefaultTableModel)table_comportement.getModel(), inComportement.getText());
     }//GEN-LAST:event_btn_addComportementMouseClicked
 
+    //shows corresponding patient info when row clicked
     private void table_curPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_curPatientsMouseClicked
         int row;
         row=table_curPatients.rowAtPoint(evt.getPoint());
@@ -653,6 +657,7 @@ public class New_consultation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_table_curPatientsMouseClicked
     
+    //makes sure descriptions we add are correct and unique
     private void addDescription(DefaultTableModel model, String inStr)
     {
         ArrayList<String> existing = new ArrayList();
@@ -667,6 +672,7 @@ public class New_consultation extends javax.swing.JFrame {
         }
     }
     
+    //properly adds descriptions to the DB
     private void insertDescription(DefaultTableModel model, String tableName, String name, String cid, Statement stmt) throws SQLException
     {
         String newStr;

@@ -1,5 +1,3 @@
-DROP TRIGGER IF EXISTS [Set Type];
-
 CREATE TRIGGER [Set Type]
 ON Consultations
 AFTER INSERT, UPDATE

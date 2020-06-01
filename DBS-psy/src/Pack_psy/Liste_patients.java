@@ -159,6 +159,7 @@ public class Liste_patients extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    //get patient info from the db
     private void fillComponents(ArrayList<String> choisis) throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
@@ -184,6 +185,7 @@ public class Liste_patients extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_exitMouseClicked
 
+    //opens appropriate patient info when we click on the row
     private void table_calendrierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_calendrierMouseClicked
         int row;
         row=table_calendrier.rowAtPoint(evt.getPoint());

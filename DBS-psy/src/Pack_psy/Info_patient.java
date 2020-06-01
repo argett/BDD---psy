@@ -313,6 +313,7 @@ public class Info_patient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //If we click a row it opens the info of the corresponding rdv
     private void table_rdvPasseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_rdvPasseMouseClicked
         openRDV(table_rdvPasse, "<");
     }//GEN-LAST:event_table_rdvPasseMouseClicked
@@ -320,6 +321,7 @@ public class Info_patient extends javax.swing.JFrame {
     private void table_rdvFuturMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_rdvFuturMouseClicked
         openRDV(table_rdvFutur, ">");
     }//GEN-LAST:event_table_rdvFuturMouseClicked
+    
     
     private void openRDV(javax.swing.JTable table, String cpr)
     {
@@ -336,6 +338,7 @@ public class Info_patient extends javax.swing.JFrame {
 
     }
 
+//adds all the values from the database to the window
 private void fillComponents() throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
@@ -402,6 +405,7 @@ private void fillComponents() throws ClassNotFoundException, SQLException{
         SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         model = (DefaultTableModel)table.getModel();
         try {
+            //We do not have access to the date in an accessible format so we use a roudabout way
             Conn_dbs connex = new Conn_dbs();
             String myQuery = "SELECT exact_time FROM [Quick RDV]"
                     + "WHERE email = '"+ inMail +"' AND exact_time"+cpr+"'" + date.format(sysdate)

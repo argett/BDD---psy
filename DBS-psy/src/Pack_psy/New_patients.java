@@ -198,22 +198,24 @@ public class New_patients extends javax.swing.JFrame {
                             .addComponent(lbl_Sexe)
                             .addComponent(lbl_nom)
                             .addComponent(lbl_Email))
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                                 .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_quit))
-                            .addComponent(inFemme, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inPrenom, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(inDob)
-                            .addComponent(inHomme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inNom)
-                            .addComponent(inEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(inPrenom)
+                                    .addComponent(inNom, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                                    .addComponent(inDob, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inHomme, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(inFemme, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(276, 276, 276)
-                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_Ajouter))
                     .addGroup(layout.createSequentialGroup()
@@ -232,7 +234,7 @@ public class New_patients extends javax.swing.JFrame {
                                 .addComponent(inAnterieure)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_ajouterProf)))))
-                .addGap(28, 28, 28))
+                .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,9 +263,9 @@ public class New_patients extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Sexe)
                     .addComponent(inHomme))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(inFemme)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_mdp)
                     .addComponent(inMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -309,6 +311,7 @@ public class New_patients extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_AjouterActionPerformed
 
+    //tries to add a client when we click the add button
     private void btn_AjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_AjouterMouseClicked
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
@@ -326,6 +329,7 @@ public class New_patients extends javax.swing.JFrame {
             boolean femme = inFemme.isSelected();
             String profExists= "";
             
+            //ensures basic values are correct
             if(nom.isEmpty() || prenom.isEmpty() || (!homme && !femme))
             {
                 lbl_error.setText("Some values have not been filled!");
@@ -351,6 +355,7 @@ public class New_patients extends javax.swing.JFrame {
                 }
                 else
                 {
+                    //we only add previous jobs if the patient was actually created
                     model = (DefaultTableModel)table_anterieure.getModel();
                     for(int i=0;i<model.getRowCount();i++)
                     {
@@ -365,7 +370,7 @@ public class New_patients extends javax.swing.JFrame {
                         stmt.executeUpdate(archiveProf);
                     }
                 }
-                
+                //we only close the window if the patient was actually created
                 this.dispose();
             }
         } catch (SQLException ex) {
@@ -381,6 +386,7 @@ public class New_patients extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inMdpActionPerformed
 
+    //this ensures jobs are unique and correct
     private void btn_ajouterProfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ajouterProfMouseClicked
         String inStr = inAnterieure.getText();
         model = (DefaultTableModel)table_anterieure.getModel();
