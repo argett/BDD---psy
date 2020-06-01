@@ -6,8 +6,8 @@
 package Pack_psy;
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class Session {
    private final String type; // patient or psy

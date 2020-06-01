@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
  */
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class New_consultation extends javax.swing.JFrame {
     DefaultTableModel modelCur;
@@ -585,7 +585,7 @@ public class New_consultation extends javax.swing.JFrame {
             
             if(Double.parseDouble(prix)<0)
             {
-                lbl_error.setText("Incorrect Prioe!");
+                lbl_error.setText("Incorrect Price!");
             } else {
                 Statement stmt = connex.getStatement();
                 

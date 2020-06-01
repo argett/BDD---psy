@@ -11,15 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class Psy_home extends javax.swing.JFrame {
     private static Session psycho;

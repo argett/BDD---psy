@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class Conn_dbs {    
     private static Connection conn;

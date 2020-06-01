@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
  */
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class View_consultation extends javax.swing.JFrame {
     DefaultTableModel modelCur;

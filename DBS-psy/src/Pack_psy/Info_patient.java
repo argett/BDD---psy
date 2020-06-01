@@ -8,14 +8,16 @@ package Pack_psy;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-
+/**
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
+ */
 public class Info_patient extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;

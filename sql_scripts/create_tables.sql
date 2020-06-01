@@ -1,3 +1,6 @@
+/* THEO DELETTRE
+ LILIAN FAVRE GARCIA */
+
 ALTER TABLE Patients
     DROP CONSTRAINT IF EXISTS "Patients_Professions_FK";
 ALTER TABLE Rendez_Vous

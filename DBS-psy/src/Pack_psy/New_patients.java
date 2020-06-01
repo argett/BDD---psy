@@ -17,7 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-
+/**
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
+ */
 public class New_patients extends javax.swing.JFrame {
     Session psycho;
     DefaultTableModel model;

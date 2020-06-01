@@ -1,3 +1,6 @@
+/* THEO DELETTRE
+ LILIAN FAVRE GARCIA */
+
 INSERT INTO Compte_Psy (psyid, mdp)
 VALUES ('admin','password');
 

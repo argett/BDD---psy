@@ -13,8 +13,8 @@ import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class Connexion extends javax.swing.JFrame {
      private static Session session;

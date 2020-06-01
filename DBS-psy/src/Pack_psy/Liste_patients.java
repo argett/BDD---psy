@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author lilian
+ *LILIAN FAVRE GARCIA
+ *THEO DELETTRE
  */
 public class Liste_patients extends javax.swing.JFrame {
     Session psycho;
