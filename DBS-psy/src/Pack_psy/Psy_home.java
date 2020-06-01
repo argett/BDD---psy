@@ -130,6 +130,11 @@ public class Psy_home extends javax.swing.JFrame {
         });
 
         btn_deco.setText("Deconnecter");
+        btn_deco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_decoMouseClicked(evt);
+            }
+        });
 
         btn_addConsultation.setText("Ajouter une consultation");
         btn_addConsultation.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,6 +210,12 @@ public class Psy_home extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btn_addConsultationMouseClicked
+
+    private void btn_decoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_decoMouseClicked
+        this.dispose();
+        Connexion connect = new Connexion();
+        connect.setVisible(true);
+    }//GEN-LAST:event_btn_decoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -318,13 +329,6 @@ public class Psy_home extends javax.swing.JFrame {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
-    public void mouseClicked(MouseEvent e) {
-       int x = e.getX();
-       int y = e.getY();
-       System.out.println(x + "," + y);
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addConsultation;

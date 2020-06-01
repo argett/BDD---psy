@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +26,6 @@ public class View_consultation extends javax.swing.JFrame {
     String cid;
     int initRow;
     
-    /**
-     * Creates new form New_consultation
-     */
     public View_consultation(String cid) throws ClassNotFoundException, SQLException{
         this.cid = cid;
         initComponents();
