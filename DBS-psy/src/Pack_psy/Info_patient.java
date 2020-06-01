@@ -371,9 +371,7 @@ private void fillComponents() throws ClassNotFoundException, SQLException{
             lbl_inProfActuelle.setText(rs.getString("profession"));
             lbl_inDecouverte.setText(rs.getString("connupar"));
             
-            String getAnterieures = "SELECT Anterieure.profession FROM Anterieure INNER JOIN Patients "
-                    + "ON Patients.patientid = Anterieure.patientid "
-                    + "WHERE email = '" + inMail + "';";
+            String getAnterieures = "SELECT profession FROM Anterieure WHERE email = '" + inMail + "';";
 
             rs = connex.getStatement().executeQuery(getAnterieures);
             

@@ -74,14 +74,14 @@ public class Psy_home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Horaire", "Nom", "Prénom", "Dernière séance", "Fiche complète"
+                "Heure", "Nom", "Prénom", "Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -104,7 +104,6 @@ public class Psy_home extends javax.swing.JFrame {
             table_calendrier.getColumnModel().getColumn(1).setResizable(false);
             table_calendrier.getColumnModel().getColumn(2).setResizable(false);
             table_calendrier.getColumnModel().getColumn(3).setResizable(false);
-            table_calendrier.getColumnModel().getColumn(4).setResizable(false);
         }
 
         lbl_date.setText("Date");
@@ -166,7 +165,7 @@ public class Psy_home extends javax.swing.JFrame {
                         .addComponent(btn_addConsultation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_listePatients)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +175,7 @@ public class Psy_home extends javax.swing.JFrame {
                     .addComponent(lbl_psyCo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_exit)
                     .addComponent(btn_deco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_date, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_dateInf)
@@ -220,10 +219,7 @@ public class Psy_home extends javax.swing.JFrame {
         dtm.setRowCount(0);
         
         //Save the dbs content into lists before to fill the table, otherwise the conn will be closed after 1 update
-        ArrayList<String> horaires = new ArrayList<>();
-        ArrayList<String> noms = new ArrayList<>();
-        ArrayList<String> prenoms = new ArrayList<>();
-        ArrayList<String> professions = new ArrayList<>();
+        String heure, nom, prenom, type;
         // to make the update
         model = (DefaultTableModel)table_calendrier.getModel();
         try {
@@ -236,36 +232,18 @@ public class Psy_home extends javax.swing.JFrame {
             tomorrow.add(6, 1);         // we add 1 day into the calendar
             
             // make the queries
-            String getHoraire = "SELECT horaire FROM Consultations WHERE horaire >= '" + lbl_date.getText() + "' AND horaire <= '" + date.format(tomorrow.getTime()) + "' ORDER BY horaire;";
-            String getNoms = "SELECT nom FROM Patients";
-            String getPrenoms = "SELECT prenom FROM Patients";
-            String getSeance = "SELECT profession FROM Patients";
+            String getRDVs = "SELECT Heure, Nom, Prénom, Type   FROM [DISTINCT RDV] WHERE Date >= '" + lbl_date.getText() + "' AND Date <= '" + date.format(tomorrow.getTime()) + "' ORDER BY Date;";
             
             // save the content into lists
-            ResultSet rsH = connex.getStatement().executeQuery(getHoraire);
+            ResultSet rsH = connex.getStatement().executeQuery(getRDVs);
 
             while(rsH.next()){
-                horaires.add(rsH.getString("horaire").substring(11, 16)); // we only want the hours & minutes
-            }
-
-            ResultSet rsN = connex.getStatement().executeQuery(getNoms);
-            while(rsN.next()){
-                noms.add(rsN.getString("nom"));
-            }
-            
-            ResultSet rsP = connex.getStatement().executeQuery(getPrenoms);
-            while(rsP.next()){
-                prenoms.add(rsP.getString("prenom"));
-            }
-            
-            ResultSet rsS = connex.getStatement().executeQuery(getSeance);
-            while(rsS.next()){
-                professions.add(rsS.getString("profession"));
-            }
-            
-            // now the querries are finished, we can update the table (and make the conn closed)
-            for(int i=0; i<horaires.size(); i++){
-                model.insertRow(model.getRowCount(), new Object[]{horaires.get(i),noms.get(i),prenoms.get(i),professions.get(i),"click"});
+                heure = rsH.getString("Heure");
+                nom = rsH.getString("Nom");
+                prenom = rsH.getString("Prénom");
+                type = rsH.getString("Type");
+                
+                model.insertRow(model.getRowCount(), new Object[]{heure,nom,prenom,type});
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
@@ -307,24 +285,26 @@ public class Psy_home extends javax.swing.JFrame {
     private void table_calendrierMouseClicked(MouseEvent evt) {
         try {
             String ID = updateCalendar();
-            Info_patient pf = new Info_patient(psycho, ID); 
-            pf.setVisible(true);
+            View_consultation vf = new View_consultation(ID); 
+            vf.setVisible(true);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private String updateCalendar(){
-        String nom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 1);
-        String prenom = (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), 2);
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-dd-MM");
+        
         try {
             Conn_dbs connex = new Conn_dbs();
-            String myQuery = "SELECT email FROM Patients WHERE nom = '"+ nom +"' AND prenom = '"+ prenom +"'";
+            
+            String dateTime = date.format(date.parse(lbl_date.getText())) + " " + (String) table_calendrier.getModel().getValueAt(table_calendrier.getSelectedRow(), model.findColumn("Heure"));
+            String myQuery = "SELECT consultationid FROM Consultations WHERE horaire = '"+ dateTime +"';";
             ResultSet rs = connex.getStatement().executeQuery(myQuery);
             while(rs.next()){
                 return rs.getString(1);
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
