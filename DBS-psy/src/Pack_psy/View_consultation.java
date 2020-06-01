@@ -355,7 +355,7 @@ public class View_consultation extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(309, 1069, Short.MAX_VALUE)
+                .addGap(309, 1101, Short.MAX_VALUE)
                 .addComponent(btn_exit))
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
@@ -363,7 +363,7 @@ public class View_consultation extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_annuler)
                         .addGap(351, 351, 351)
-                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_addRDV)
                         .addGap(22, 22, 22))

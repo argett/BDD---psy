@@ -54,7 +54,7 @@
                           <Component id="inDob" alignment="0" max="32767" attributes="0"/>
                           <Component id="inHomme" max="32767" attributes="0"/>
                           <Component id="inNom" alignment="0" max="32767" attributes="0"/>
-                          <Component id="inEmail" alignment="0" pref="299" max="32767" attributes="0"/>
+                          <Component id="inEmail" alignment="0" pref="330" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
