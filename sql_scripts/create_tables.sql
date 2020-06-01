@@ -30,11 +30,13 @@ DROP TABLE  IF EXISTS Comportements;
 DROP TABLE  IF EXISTS Rendez_Vous;
 DROP TABLE  IF EXISTS Anterieure;
 DROP TABLE  IF EXISTS Notes_Comportements;
-DROP TABLE  IF EXISTS Notes_Mots;
+DROP TABLE  IF EXISTS Notes_MotCles;
 DROP TABLE  IF EXISTS Notes_Postures;
 DROP TABLE  IF EXISTS Compte_Psy;
 DROP TABLE  IF EXISTS Compte_Patient;
 DROP TABLE  IF EXISTS Proffessions;
+DROP TABLE  IF EXISTS Notes_Mots;
+
 
 /*------------------------------------------------------------
 # Table: Consultations
@@ -155,13 +157,13 @@ CREATE TABLE Notes_Comportements(
 # Table: Notes Mots
 ------------------------------------------------------------*/
 
-CREATE TABLE Notes_Mots(
+CREATE TABLE Notes_MotCles(
         mot            Varchar (25) NOT NULL ,
         consultationid Int NOT NULL
-	,CONSTRAINT Notes_Mots_PK PRIMARY KEY (mot,consultationid)
+	,CONSTRAINT Notes_MotCles_PK PRIMARY KEY (mot,consultationid)
 
-	,CONSTRAINT Notes_Mots_MotCles_FK FOREIGN KEY (mot) REFERENCES MotCles(mot)
-	,CONSTRAINT Notes_Mots_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
+	,CONSTRAINT Notes_MotCles_MotCles_FK FOREIGN KEY (mot) REFERENCES MotCles(mot)
+	,CONSTRAINT Notes_MotCles_Consultations0_FK FOREIGN KEY (consultationid) REFERENCES Consultations(consultationid) ON DELETE CASCADE
 );
 
 

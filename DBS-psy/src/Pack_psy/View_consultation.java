@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,9 @@ public class View_consultation extends javax.swing.JFrame {
     DefaultTableModel modelAll;
     String cid;
     int initRow;
+    int initMot;
+    int initPos;
+    int initComp;
     
     public View_consultation(String cid) throws ClassNotFoundException, SQLException{
         this.cid = cid;
@@ -64,6 +68,21 @@ public class View_consultation extends javax.swing.JFrame {
         btn_annuler = new javax.swing.JButton();
         lbl_type = new javax.swing.JLabel();
         inType = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table_Mot = new javax.swing.JTable();
+        lbl_mot = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_posture = new javax.swing.JTable();
+        inMot = new javax.swing.JTextField();
+        btn_addMot = new javax.swing.JButton();
+        lbl_posture = new javax.swing.JLabel();
+        inPosture = new javax.swing.JTextField();
+        btn_addPosture = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_comportement = new javax.swing.JTable();
+        lbl_comportement = new javax.swing.JLabel();
+        inComportement = new javax.swing.JTextField();
+        btn_addComportement = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -217,12 +236,120 @@ public class View_consultation extends javax.swing.JFrame {
 
         inType.setText("type");
 
+        table_Mot.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mot-Cle"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(table_Mot);
+
+        lbl_mot.setText("Mot-Cles :");
+
+        table_posture.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Posture"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(table_posture);
+
+        inMot.setText("Mot");
+
+        btn_addMot.setText("+");
+        btn_addMot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addMotMouseClicked(evt);
+            }
+        });
+
+        lbl_posture.setText("Postures : ");
+
+        inPosture.setText("Posture");
+
+        btn_addPosture.setText("+");
+        btn_addPosture.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addPostureMouseClicked(evt);
+            }
+        });
+
+        table_comportement.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Comportement"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(table_comportement);
+
+        lbl_comportement.setText("Comportement :");
+
+        inComportement.setText("Comp");
+
+        btn_addComportement.setText("+");
+        btn_addComportement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addComportementMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(309, 907, Short.MAX_VALUE)
+                .addGap(309, 1069, Short.MAX_VALUE)
                 .addComponent(btn_exit))
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
@@ -230,14 +357,14 @@ public class View_consultation extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_annuler)
                         .addGap(351, 351, 351)
-                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                        .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_addRDV)
                         .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tab_rdvDuJour, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_getPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39))
@@ -261,17 +388,44 @@ public class View_consultation extends javax.swing.JFrame {
                                         .addGap(24, 24, 24)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(inType)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(inPrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGap(26, 26, 26))))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(inPrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGap(26, 26, 26)))
+                                                .addGap(39, 39, 39)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(lbl_mot)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                        .addComponent(inMot)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(btn_addMot))
+                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(inPosture)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(btn_addPosture))
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lbl_posture)
+                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbl_comportement)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(inComportement)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(btn_addComportement))
+                                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_patient1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -281,10 +435,10 @@ public class View_consultation extends javax.swing.JFrame {
                 .addComponent(btn_exit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lbl_patient1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tab_rdvDuJour1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(lbl_patient)
@@ -297,26 +451,53 @@ public class View_consultation extends javax.swing.JFrame {
                             .addComponent(lbl_type)
                             .addComponent(inType))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_date)
-                            .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_horaire)
-                            .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_prix)
-                            .addComponent(inPrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_reglement)
-                            .addComponent(cbox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_anxiete)
-                            .addComponent(cbox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_date)
+                                    .addComponent(inDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_horaire)
+                                    .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_prix)
+                                    .addComponent(inPrix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_reglement)
+                                    .addComponent(cbox_reglement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_anxiete)
+                                    .addComponent(cbox_anxiete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_mot)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_comportement, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lbl_posture, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(inComportement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_addComportement))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(inPosture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_addMot)
+                                                .addComponent(inMot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_addPosture))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_addRDV)
                     .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,6 +550,7 @@ public class View_consultation extends javax.swing.JFrame {
     private void fillComponents() throws ClassNotFoundException, SQLException{
         // establish the connection
         Conn_dbs connex = new Conn_dbs(); 
+        Statement stmt= connex.getStatement();
         
         SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -379,7 +561,7 @@ public class View_consultation extends javax.swing.JFrame {
         String nom,prenom,email;
         String getAllPatients = "SELECT * FROM [Quick Patient] WHERE email NOT IN (SELECT email FROM Rendez_Vous WHERE consultationid = '"+cid+"') ORDER BY nom;";            
 
-        ResultSet rs = connex.getStatement().executeQuery(getAllPatients);
+        ResultSet rs = stmt.executeQuery(getAllPatients);
         while(rs.next()){
             email = rs.getString("email");
             nom= rs.getString("nom");
@@ -388,8 +570,8 @@ public class View_consultation extends javax.swing.JFrame {
         }
         
         String getCurPatients = "SELECT * FROM [Quick Patient] WHERE email IN (SELECT email FROM Rendez_Vous WHERE consultationid = '"+cid+"') ORDER BY nom;";            
-
-        rs = connex.getStatement().executeQuery(getCurPatients);
+        
+        rs = stmt.executeQuery(getCurPatients);
         while(rs.next()){
             email = rs.getString("email");
             nom= rs.getString("nom");
@@ -415,6 +597,10 @@ public class View_consultation extends javax.swing.JFrame {
             cbox_anxiete.setSelectedItem(anxiete);
         }
         cbox_reglement.setSelectedItem(rs.getString("reglement"));
+        
+        initMot = getDescription((DefaultTableModel)table_Mot.getModel(), "MotCles", "mot", stmt);
+        initPos = getDescription((DefaultTableModel)table_posture.getModel(), "Postures", "posture", stmt);
+        initComp = getDescription((DefaultTableModel)table_comportement.getModel(), "Comportements", "comportement", stmt);
     }
     
     private void btn_addRDVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addRDVMouseClicked
@@ -471,6 +657,10 @@ public class View_consultation extends javax.swing.JFrame {
                         
                         stmt.executeUpdate(addRelation);
                     }
+                    
+                    insertDescription((DefaultTableModel)table_Mot.getModel(), "MotCles", "mot", consID, stmt, initMot);
+                    insertDescription((DefaultTableModel)table_posture.getModel(), "Postures", "posture", consID, stmt, initPos);
+                    insertDescription((DefaultTableModel)table_comportement.getModel(), "Comportements", "comportement", consID, stmt, initComp);
                 }
                 
                 this.dispose();
@@ -500,29 +690,97 @@ public class View_consultation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_annulerMouseClicked
 
+    private void btn_addMotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMotMouseClicked
+        addDescription((DefaultTableModel)table_Mot.getModel(), inMot.getText());
+    }//GEN-LAST:event_btn_addMotMouseClicked
+
+    private void btn_addPostureMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addPostureMouseClicked
+        addDescription((DefaultTableModel)table_posture.getModel(), inPosture.getText());
+    }//GEN-LAST:event_btn_addPostureMouseClicked
+
+    private void btn_addComportementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addComportementMouseClicked
+        addDescription((DefaultTableModel)table_comportement.getModel(), inComportement.getText());
+    }//GEN-LAST:event_btn_addComportementMouseClicked
+
+    private int getDescription(DefaultTableModel model, String tableName, String name, Statement stmt) throws SQLException
+    {
+        ResultSet rs = stmt.executeQuery("SELECT "+name+" FROM Notes_"+tableName+" WHERE consultationid = "+cid+";");
+        
+        while(rs.next())
+        {
+            model.addRow(new Object[]{rs.getString(name)});
+        }
+        return model.getRowCount();
+    }
+    
+    private void addDescription(DefaultTableModel model, String inStr)
+    {
+        ArrayList<String> existing = new ArrayList();
+        for(int i=0;i<model.getRowCount();i++)
+        {
+            existing.add((String) model.getValueAt(i, 0));
+        }
+        
+        if(! existing.contains(inStr) && !inStr.isEmpty() && inStr.length()<25)
+        {
+            model.addRow(new Object[]{inStr});
+        }
+    }
+    
+    private void insertDescription(DefaultTableModel model, String tableName, String name, String cid, Statement stmt, int startRow) throws SQLException
+    {
+        String newStr;
+        ResultSet rs;
+        for(int i=startRow;i<model.getRowCount();i++)
+        {
+            newStr= (String) model.getValueAt(i, 0);
+            rs = stmt.executeQuery("SELECT * FROM "+tableName+" WHERE "+name+" = '"+newStr+"';");
+            if(!rs.next())
+            {
+                stmt.executeUpdate("INSERT INTO "+tableName+" ("+name+") VALUES  ('"+newStr+"');");
+            }
+            stmt.executeUpdate("INSERT INTO Notes_"+tableName+" ("+name+", consultationid) VALUES  ('"+newStr+"', "+cid+");");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addComportement;
+    private javax.swing.JButton btn_addMot;
+    private javax.swing.JButton btn_addPosture;
     private javax.swing.JButton btn_addRDV;
     private javax.swing.JButton btn_annuler;
     private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_getPatient;
     private javax.swing.JComboBox<String> cbox_anxiete;
     private javax.swing.JComboBox<String> cbox_reglement;
+    private javax.swing.JTextField inComportement;
     private javax.swing.JTextField inDate;
     private javax.swing.JTextField inHoraire;
+    private javax.swing.JTextField inMot;
+    private javax.swing.JTextField inPosture;
     private javax.swing.JTextField inPrix;
     private javax.swing.JLabel inType;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbl_anxiete;
+    private javax.swing.JLabel lbl_comportement;
     private javax.swing.JLabel lbl_date;
     private javax.swing.JLabel lbl_error;
     private javax.swing.JLabel lbl_horaire;
+    private javax.swing.JLabel lbl_mot;
     private javax.swing.JLabel lbl_patient;
     private javax.swing.JLabel lbl_patient1;
+    private javax.swing.JLabel lbl_posture;
     private javax.swing.JLabel lbl_prix;
     private javax.swing.JLabel lbl_reglement;
     private javax.swing.JLabel lbl_type;
     private javax.swing.JScrollPane tab_rdvDuJour;
     private javax.swing.JScrollPane tab_rdvDuJour1;
+    private javax.swing.JTable table_Mot;
     private javax.swing.JTable table_allPatients;
+    private javax.swing.JTable table_comportement;
     private javax.swing.JTable table_curPatients;
+    private javax.swing.JTable table_posture;
     // End of variables declaration//GEN-END:variables
 }

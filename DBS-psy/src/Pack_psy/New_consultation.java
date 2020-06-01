@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -379,27 +380,29 @@ public class New_consultation extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lbl_mot)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(inMot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(inMot)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btn_addMot))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lbl_posture)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(inPosture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(inPosture)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btn_addPosture))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_posture)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl_comportement)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(inComportement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_addComportement))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(inComportement)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(btn_addComportement))
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_patient1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -407,7 +410,7 @@ public class New_consultation extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(451, 451, 451)
-                .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                .addComponent(lbl_error, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_addRDV)
                 .addGap(22, 22, 22))
@@ -443,9 +446,7 @@ public class New_consultation extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lbl_horaire)
-                                    .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(inMot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_addMot))
+                                    .addComponent(inHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -471,10 +472,12 @@ public class New_consultation extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(inPosture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btn_addMot)
+                                        .addComponent(inMot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btn_addPosture))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_addRDV)
                     .addComponent(lbl_error, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -598,6 +601,10 @@ public class New_consultation extends javax.swing.JFrame {
                         
                         stmt.executeUpdate(addRelation);
                     }
+                    
+                    insertDescription((DefaultTableModel)table_Mot.getModel(), "MotCles", "mot", consID, stmt);
+                    insertDescription((DefaultTableModel)table_posture.getModel(), "Postures", "posture", consID, stmt);
+                    insertDescription((DefaultTableModel)table_comportement.getModel(), "Comportements", "comportement", consID, stmt);
                 }
                 
                 this.dispose();
@@ -606,25 +613,55 @@ public class New_consultation extends javax.swing.JFrame {
             lbl_error.setText("Values are too long or date isn't possible!");
             Logger.getLogger(Psy_home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException e){
-            lbl_error.setText("price is an incorrectValue");
+            lbl_error.setText("Price is an incorrectValue");
         } catch (ParseException ex) {
-            lbl_error.setText("Date/price filled Incorrectly! Make sure format is correct!");
+            lbl_error.setText("Date filled Incorrectly! Make sure format is YYYY-MM-DD!");
             Logger.getLogger(New_patients.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_addRDVMouseClicked
 
     private void btn_addMotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMotMouseClicked
-        // TODO add your handling code here:
+        addDescription((DefaultTableModel)table_Mot.getModel(), inMot.getText());
     }//GEN-LAST:event_btn_addMotMouseClicked
 
     private void btn_addPostureMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addPostureMouseClicked
-        // TODO add your handling code here:
+        addDescription((DefaultTableModel)table_posture.getModel(), inPosture.getText());
     }//GEN-LAST:event_btn_addPostureMouseClicked
 
     private void btn_addComportementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addComportementMouseClicked
-        // TODO add your handling code here:
+        addDescription((DefaultTableModel)table_comportement.getModel(), inComportement.getText());
     }//GEN-LAST:event_btn_addComportementMouseClicked
-
+    
+    private void addDescription(DefaultTableModel model, String inStr)
+    {
+        ArrayList<String> existing = new ArrayList();
+        for(int i=0;i<model.getRowCount();i++)
+        {
+            existing.add((String) model.getValueAt(i, 1));
+        }
+        
+        if(! existing.contains(inStr) && !inStr.isEmpty() && inStr.length()<25)
+        {
+            model.addRow(new Object[]{inStr});
+        }
+    }
+    
+    private void insertDescription(DefaultTableModel model, String tableName, String name, String cid, Statement stmt) throws SQLException
+    {
+        String newStr;
+        ResultSet rs;
+        for(int i=0;i<model.getRowCount();i++)
+        {
+            newStr= (String) model.getValueAt(i, 0);
+            rs = stmt.executeQuery("SELECT * FROM "+tableName+" WHERE "+name+" = '"+newStr+"';");
+            if(!rs.next())
+            {
+                stmt.executeUpdate("INSERT INTO "+tableName+" ("+name+") VALUES  ('"+newStr+"');");
+            }
+            stmt.executeUpdate("INSERT INTO Notes_"+tableName+" ("+name+", consultationid) VALUES  ('"+newStr+"', "+cid+");");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addComportement;
     private javax.swing.JButton btn_addMot;
