@@ -10,16 +10,16 @@ package Pack_psy;
  * @author lilian
  */
 public class Session {
-   private String type; // patient or psy
-   private String id;
+   private final String type; // patient or psy
+   private final String id;
 
     Session(String id, String t) {
       this.id = id;
       this.type = t;
     }
    
-    public String getId() {
-        return this.id;
+    public String getType() {
+        return this.type;
     }
 
     public String getInfos() {

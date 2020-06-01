@@ -34,6 +34,7 @@ DROP TABLE  IF EXISTS Notes_Mots;
 DROP TABLE  IF EXISTS Notes_Postures;
 DROP TABLE  IF EXISTS Compte_Psy;
 DROP TABLE  IF EXISTS Compte_Patient;
+DROP TABLE  IF EXISTS Proffessions;
 
 /*------------------------------------------------------------
 # Table: Consultations
